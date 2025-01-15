@@ -1,0 +1,81 @@
+<root>
+    <LISTAR_TIPO_DOCUMENTO>
+        <sql>
+            SELECT
+            TIP_ID AS ID,
+            TIP_DESCRIPCION AS DESCRIPCION
+            FROM
+            TIPO_DOCUMENTO;
+        </sql>
+    </LISTAR_TIPO_DOCUMENTO>
+    <LISTAR_TIPO_SEXO>
+        <sql>
+            SELECT
+            SEX_ID AS ID,
+            SEX_DESCRIPCION AS DESCRIPCION	
+            FROM
+            SEXO;
+        </sql>
+    </LISTAR_TIPO_SEXO>
+    <LISTAR_DEPARTAMENTOS>
+        <sql>
+            SELECT
+            DEP_ID AS ID,
+            DEP_DESCRIPCION AS DESCRIPCION	
+            FROM
+            DEPARTAMENTO;
+        </sql>
+    </LISTAR_DEPARTAMENTOS>
+    <LISTAR_CIUDADES>
+        <sql>
+            SELECT
+            CIU_ID AS ID,
+            CIU_DESCRIPCION AS DESCRIPCION	
+            FROM
+            CIUDAD 
+            WHERE DEP_ID = ?;
+        </sql>
+    </LISTAR_CIUDADES>
+    <LISTAR_BARRIOS>
+        <sql>
+            SELECT
+            BARRIO_ID AS ID,
+            BARRIO_DESCRIPCION AS DESCRIPCION 
+            FROM
+            BARRIOS 
+            WHERE
+            CIUD_ID =?
+        </sql>
+    </LISTAR_BARRIOS>
+    <LISTAR_ESTADO_CIVIL>
+        <sql>
+            SELECT
+            ETC_ID AS ID,
+            ETC_DESCRIPCION AS DESCRIPCION	
+            FROM
+            ESTADO_CIVIL;
+        </sql>
+    </LISTAR_ESTADO_CIVIL>
+    <LISTAR_MINISTERIOS>
+        <sql>
+            SELECT
+            MIN_ID AS ID,
+            MIN_DESCRIPCION AS DESCRIPCION	
+            FROM
+            MINISTERIOS;
+        </sql>
+    </LISTAR_MINISTERIOS>
+    <CONSULTAR_CODIGO_PASTOR>
+        <sql>
+            SELECT
+            PASTORES_COD AS PAST_COD 
+            FROM
+            PASTORES
+            WHERE PASTORES_COD = ?
+        </sql>
+    </CONSULTAR_CODIGO_PASTOR>
+    <AGREGAR_PASTOR_GENERAL>
+        <sql>
+        </sql>
+    </AGREGAR_PASTOR_GENERAL>
+</root>
