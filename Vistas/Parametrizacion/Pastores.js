@@ -7,8 +7,8 @@ $(document).ready(function() {
     });*/
 
 
-    $("#btnGuardar").click(function() {
-        validarCampos();
+    $("#btnGuardarPastorPg").click(function() {
+        validarCamposPastorGeneral();
     });
 
 
@@ -273,7 +273,9 @@ function validarCamposPastorGeneral() {
     } else if (codigoPastor.length === 0) {
         alertify.alert('Por favor digitar el codigo pastor');
     } else {
-        registrarPastorGeneral(tipoDocumento, numDocumento, primerNombre, segundoNombre, primerApellido, segundoApellido, departamento, ciudad, barrios, direccion, telefono, celular, sexo, edad, estadoCivil, ministerio, codigoPastor, editarPg, idPg);
+        alertify.confirm('Mnesaje', 'Esta seguro de realizar el registro', function() {
+            registrarPastorGeneral(tipoDocumento, numDocumento, primerNombre, segundoNombre, primerApellido, segundoApellido, departamento, ciudad, barrios, direccion, telefono, celular, sexo, edad, estadoCivil, ministerio, codigoPastor, editarPg, idPg);
+        }, function() {});
     }
 }
 

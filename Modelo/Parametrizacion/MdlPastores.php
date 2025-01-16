@@ -211,12 +211,12 @@ class mdlPastores extends conexion
             $row = $resultado->fetch_assoc();
             if (count($row) === 0) {
                 $respuesta = $conexion->prepare($this->getSql("AGREGAR_PASTOR_GENERAL", self::RUTA_SQL));
-                $respuesta->bind_param('sssssssssssssssssssssssssssssss', $tipoDocumento, $numDocumento, $primerNombre, $segundoNombre, $primerApellido, $segundoApellido, $departamento, $ciudad, $barrios, $direccion, $telefono, $celular, $sexo, $edad, $estadoCivil);
+                $respuesta->bind_param('sssssssssssssss', $tipoDocumento, $numDocumento, $primerNombre, $segundoNombre, $primerApellido, $segundoApellido, $departamento, $ciudad, $barrios, $direccion, $telefono, $celular, $sexo, $edad, $estadoCivil);
                 $filasAfectadas = $respuesta->execute() or ($respuesta->error);
                 $idter = mysqli_insert_id($conexion);
                 if ($filasAfectadas > 0) {
                     $respuesta = $conexion->prepare($this->getSql("AGREGAR_PASTORGENERAL_DETALLE", self::RUTA_SQL));
-                    $respuesta->bind_param('s', $idter, $ministerio, $codigoPastor);
+                    $respuesta->bind_param('sss', $idter, $ministerio, $codigoPastor);
 
                     $filasAfectadas = $respuesta->execute();
                 }
