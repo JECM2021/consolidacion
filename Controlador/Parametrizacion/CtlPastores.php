@@ -4,8 +4,8 @@ require_once '../../Modelo/Parametrizacion/MdlPastores.php';
 require_once '../../Modelo/Parametrizacion/Bean/PastoresVO.php';
 require_once '../../Modelo/MdlConsolidacion.php';
 
-require_once '../../webPage/PHPJasperXML-master/tcpdf/tcpdf.php';
-require_once '../../webPage/PHPJasperXML-master/PHPJasperXML.inc.php';
+//require_once '../../webPage/PHPJasperXML-master/tcpdf/tcpdf.php';
+//require_once '../../webPage/PHPJasperXML-master/PHPJasperXML.inc.php';
 
 $op = filter_input(INPUT_POST, 'op', FILTER_DEFAULT);
 $isDefinidida = isset($op) ? true : false;  // indica si la variable esta definida o no;
