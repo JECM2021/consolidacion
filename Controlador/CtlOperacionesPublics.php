@@ -1,6 +1,6 @@
 <?php
 
-require_once '/../Modelo/Seguridad/Bean/UsuariosVO.php';
+require_once '/../xampp/htdocs/consolidacion/Modelo/Seguridad/Bean/UsuariosVO.php';
 require_once '../validaSession.php';
 require_once '../Modelo/MdlConsolidacion.php';
 include_once "../Vistas/funciones.php";
@@ -166,7 +166,7 @@ switch ($op) {
     case 53:
         listarReferenciaVencidas();
         break;
-    case 54 :
+    case 54:
         listarOrdenesLaboratorioPendientes();
         break;
 }
@@ -193,7 +193,7 @@ function loguerarUsuario()
             //$_SESSION['tercero'] = $usuariosVO->getTerId();
             $_SESSION['usuUsuario'] = $usuariosVO->getUsuusuario();
             $_SESSION['empEmpresa'] = $empresaVO;
-           // $_SESSION['cod_empresa'] = $empresa;
+            // $_SESSION['cod_empresa'] = $empresa;
             $listaMenu = $mdlPacientes->obtenerMenu($usuariosVO);
             $listMenuReporte = $mdlPacientes->visualizarMenuReportes($usuariosVO);
             $listMenuPagReporte = $mdlPacientes->visualizarPaginasReportes($usuariosVO);
@@ -1055,7 +1055,8 @@ function listarComboExamenesLaboratorio()
         echo $exc->getTraceAsString();
     }
 }
-function listarReferenciaVencidas(){
+function listarReferenciaVencidas()
+{
     global $mdlPacientes;
     try {
         $listarReferencias = $mdlPacientes->listarReferenciasVencidas();
@@ -1068,9 +1069,9 @@ function listarReferenciaVencidas(){
     } catch (Exception $exc) {
         echo $exc->getTraceAsString();
     }
-    
 }
-function listarOrdenesLaboratorioPendientes(){
+function listarOrdenesLaboratorioPendientes()
+{
     global $mdlPacientes;
     try {
         $listarReferencias = $mdlPacientes->listarOrdenesPendientes();
@@ -1083,5 +1084,4 @@ function listarOrdenesLaboratorioPendientes(){
     } catch (Exception $exc) {
         echo $exc->getTraceAsString();
     }
-    
 }
