@@ -233,4 +233,34 @@ class mdlPastores extends conexion
         }
         return $filasAfectadas;
     }
+
+    function visualizarPastGeneral()
+    {
+        $rawdata = array();
+        try {
+            $conexion = $this->conectarBd(self::CONSOLIDACION);
+            $respuesta = $conexion->prepare($this->getSql("VISUALIZAR_PASTORES_GENERAL", self::RUTA_SQL));
+            $respuesta->execute();
+            $result = $respuesta->get_result();
+            while ($row = $result->fetch_assoc()) {
+                $rawdata[] = array(
+                    "TER_ID" => $row['TER_ID'],
+                    "PASTGEN_ID" => $row['PASTGEN_ID'],
+                    "CODIGO" => $row['CODIGO'],
+                    "NOMBRE" => $row['NOMBRE'],
+                    "MINISTERIO" => $row['MINISTERIO'],
+                    "ESTADO" => $row['ESTADO'],
+                    "ESTADO_ID" => $row['ESTADO_ID'],
+                );
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        try {
+            $this->descconectarBd($conexion);
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $rawdata;
+    }
 }

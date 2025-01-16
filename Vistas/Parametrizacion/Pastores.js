@@ -17,6 +17,7 @@ $(document).ready(function() {
     listarComboDepartamento('cmbDepartamentoPg');
     listarEstadoCivil('cmbEstadoCivilPg');
     listarMinisterios('cmbMinisterioPg');
+    visualizarPastGeneral();
 
 });
 
@@ -317,6 +318,71 @@ function registrarPastorGeneral(tipoDocumento, numDocumento, primerNombre, segun
 
                 } else if (ret.hasOwnProperty("error")) {
                     alertify.alert('Mensaje', ret.error);
+                }
+            } catch (e) {}
+        },
+        error: function(objeto, error, error2) {
+            alertify.alert(error);
+        }
+    });
+}
+
+var listarPastGeneral = "";
+
+function visualizarPastGeneral() {
+    $("#tbl_visualizar_PastGeneral").html("<label style='float:left; margin-left:48%; margin-top:15%; font-size:15px;'>Cargando...</label><img src=''  style='float:left; margin-top:%; margin-left:49%; width:5%;'>");
+    var ur = CONTROLLERPASTORES;
+    var op = 9;
+    $.ajax({
+        type: "POST",
+        url: ur,
+        data: ({
+            op: op
+        }),
+        cache: false,
+        dataType: "html",
+        success: function(data) {
+            var ret = "";
+            try {
+                ret = eval('(' + data + ')');
+                debugger;
+                listarPastGeneral = ret;
+                if (ret.hasOwnProperty("error")) {
+                    alertify.error(ret.error);
+                } else {
+                    $listaUsuario = $("#tbl_visualizar_PastGeneral");
+                    $listaUsuario.html('');
+                    var thead = $("<thead></thead>");
+                    $listaUsuario.append(thead);
+                    var tr = $("<tr class='info'></tr>");
+                    thead.append(tr);
+                    var th = $("<th style=''>CODIGO</th>");
+                    tr.append(th);
+                    var th = $("<th style=''>NOMBRE Y APELLIDO</th>");
+                    tr.append(th);
+                    th = $("<th style=''>MINISTERIO</th>");
+                    tr.append(th);
+                    var th = $("<th style=''>ESTADO</th>");
+                    tr.append(th);
+                    var th = $("<th style='width: 2%;'><i class='fa fa-pencil-square-o'aria-hidden='true'></i></th>");
+                    tr.append(th);
+                    var tbody = $("<tbody></tbody>");
+                    $listaUsuario.append(tbody);
+                    for (var i = 0; i < ret.length; i++) {
+                        var tr = $("<tr class='tblFiltrarUsuario' oncontextmenu=\"colorCeldas(this,4,'" + i + "');\"  style  = 'cursor:pointer;'></tr>");
+                        tbody.append(tr);
+                        var td = $("<td>" + (ret[i].hasOwnProperty("CODIGO") ? ret[i].CODIGO : "") + "</td>");
+                        tr.append(td);
+                        var td = $("<td>" + (ret[i].hasOwnProperty("NOMBRE") ? ret[i].NOMBRE : "") + "</td>");
+                        tr.append(td);
+                        var td = $("<td>" + (ret[i].hasOwnProperty("MINISTERIO") ? ret[i].MINISTERIO : "") + "</td>");
+                        tr.append(td);
+                        var td = $("<td>" + (ret[i].hasOwnProperty("ESTADO") ? ret[i].ESTADO : "") + "</td>");
+                        tr.append(td);
+                        var td = $("<td onclick =\"consultarInformacionPastGeneral('" + i + "');\"  data-toggle='modal' data-target='#modalEdiPastorGeneral'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></td>");
+                        tr.append(td);
+
+                    }
                 }
             } catch (e) {}
         },

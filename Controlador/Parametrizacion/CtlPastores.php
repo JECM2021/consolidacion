@@ -36,6 +36,9 @@ switch ($op) {
     case 8:
         registrarPastorGeneral();
         break;
+    case 9:
+        visualizarPastGeneral();
+        break;
 }
 
 
@@ -212,6 +215,20 @@ function registrarPastorGeneral()
             $statusJson["error"] = "El codigo ya se encentra creado";
         }
         echo json_encode($statusJson);
+    } catch (Exception $exc) {
+        echo $exc->getTraceAsString();
+    }
+}
+
+function visualizarPastGeneral()
+{
+    $mdlPastores = new mdlPastores();
+    try {
+        $listaRegistro = $mdlPastores->visualizarPastGeneral();
+        if ($listaRegistro !== null) {
+            $json = json_encode($listaRegistro);
+            echo $json;
+        }
     } catch (Exception $exc) {
         echo $exc->getTraceAsString();
     }

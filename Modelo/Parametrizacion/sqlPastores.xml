@@ -86,4 +86,23 @@
             (?,?,?);
         </sql>
     </AGREGAR_PASTORGENERAL_DETALLE>
+    <VISUALIZAR_PASTORES_GENERAL>
+        <sql>
+            SELECT
+            PAST.PASTORES_COD AS CODIGO,
+            CONCAT(TER.TER_PRIMER_NOMBRE,' ',TER.TER_SEGUNDO_NOMBRE,' ',TER.TER_PRIMER_APELLIDO,' ',TER.TER_SEGUNDO_APELLIDO) AS NOMBRE,
+            UPPER(mint.min_descripcion) as MINISTERIO,
+            PAST.PAST_ESTADO AS ESTADO_ID,
+            CASE
+            WHEN PAST.PAST_ESTADO = 'A' THEN 'ACTIVO'
+            WHEN PAST.PAST_ESTADO = 'I' THEN 'INACTIVO'
+            END	AS ESTADO,
+            TER.TER_ID AS TER_ID,
+            PAST.PATORES_ID AS PASTGEN_ID
+            FROM
+            PASTORES PAST
+            INNER JOIN TERCEROS TER ON TER.TER_ID = PAST.TER_ID
+            INNER JOIN MINISTERIOS MINT ON MINT.MIN_ID = PAST.MIN_ID
+        </sql>
+    </VISUALIZAR_PASTORES_GENERAL>
 </root>
