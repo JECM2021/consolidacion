@@ -1,22 +1,31 @@
 $(document).ready(function() {
-    /*$('#txtNumeroFactura').keypress(function (event) {
-        var keycode = (event.keyCode ? event.keyCode : event.which);
-        if (keycode === 13) {
-            consultarFactura();
-        }
-    });*/
-
 
     $("#btnGuardarPastorPg").click(function() {
         validarCamposPastorGeneral();
     });
 
+    $("#btnCancelarPastorPg").click(function(){
+        limpiarCampos();
+    });
+
 
     listarTipoDocumento('cmbTipoDocumentoPg');
+    listarTipoDocumento('cmbTipoDocumentoPp');
+
     listarComboSexo('cmbSexoPg');
+    listarComboSexo('cmbSexoPp');
+
     listarComboDepartamento('cmbDepartamentoPg');
+    listarComboDepartamento('cmbDepartamentoPp');
+
     listarEstadoCivil('cmbEstadoCivilPg');
+    listarEstadoCivil('cmbEstadoCivilPp');
+
     listarMinisterios('cmbMinisterioPg');
+    listarMinisterios('cmbMinisterioPp');
+
+    listarPastoresGenerales('cmbPastorGeneral');
+
     visualizarPastGeneral();
 
 });
@@ -244,6 +253,8 @@ function validarCamposPastorGeneral() {
     var codigoPastor = $("#txtCodigopg").val();
     var editarPg = $("#txtEditarPg").val();
     var idPg = $("#txtIdPg").val();
+    var ter_id = $("#txtTerPg_id").val();
+    var estado = $("#cmbEstado").val();
 
     if (tipoDocumento.length === 0) {
         alertify.alert('Por favor seleccione tipo de documento');
@@ -275,12 +286,12 @@ function validarCamposPastorGeneral() {
         alertify.alert('Por favor digitar el codigo pastor');
     } else {
         alertify.confirm('Mnesaje', 'Esta seguro de realizar el registro', function() {
-            registrarPastorGeneral(tipoDocumento, numDocumento, primerNombre, segundoNombre, primerApellido, segundoApellido, departamento, ciudad, barrios, direccion, telefono, celular, sexo, edad, estadoCivil, ministerio, codigoPastor, editarPg, idPg);
+            registrarPastorGeneral(tipoDocumento, numDocumento, primerNombre, segundoNombre, primerApellido, segundoApellido, departamento, ciudad, barrios, direccion, telefono, celular, sexo, edad, estadoCivil, ministerio, codigoPastor, editarPg, idPg, estado, ter_id);
         }, function() {});
     }
 }
 
-function registrarPastorGeneral(tipoDocumento, numDocumento, primerNombre, segundoNombre, primerApellido, segundoApellido, departamento, ciudad, barrios, direccion, telefono, celular, sexo, edad, estadoCivil, ministerio, codigoPastor, editarPg, idPg) {
+function registrarPastorGeneral(tipoDocumento, numDocumento, primerNombre, segundoNombre, primerApellido, segundoApellido, departamento, ciudad, barrios, direccion, telefono, celular, sexo, edad, estadoCivil, ministerio, codigoPastor, editarPg, idPg, estado, ter_id) {
     var ur = CONTROLLERPASTORES;
     var op = 8;
     $.ajax({
@@ -306,15 +317,17 @@ function registrarPastorGeneral(tipoDocumento, numDocumento, primerNombre, segun
             ministerio: ministerio,
             codigoPastor: codigoPastor,
             editarPg: editarPg,
-            idPg: idPg
+            idPg: idPg,
+            estado: estado,
+            ter_id: ter_id
         }),
         success: function(data) {
             try {
                 var ret = eval('(' + data + ')');
                 if (ret.hasOwnProperty("success")) {
                     alertify.success(ret.success);
-                    //$('#tbl_visualizar_cargos').DataTable().ajax.reload();
-                    //limpiarCampos();
+                    visualizarPastGeneral();
+                    limpiarCampos();
 
                 } else if (ret.hasOwnProperty("error")) {
                     alertify.alert('Mensaje', ret.error);
@@ -345,7 +358,6 @@ function visualizarPastGeneral() {
             var ret = "";
             try {
                 ret = eval('(' + data + ')');
-                debugger;
                 listarPastGeneral = ret;
                 if (ret.hasOwnProperty("error")) {
                     alertify.error(ret.error);
@@ -379,7 +391,7 @@ function visualizarPastGeneral() {
                         tr.append(td);
                         var td = $("<td>" + (ret[i].hasOwnProperty("ESTADO") ? ret[i].ESTADO : "") + "</td>");
                         tr.append(td);
-                        var td = $("<td onclick =\"consultarInformacionPastGeneral('" + i + "');\"  data-toggle='modal' data-target='#modalEdiPastorGeneral'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></td>");
+                        var td = $("<td onclick =\"consultarInformacionPastGeneral('" + i + "');\" '><i class='fa fa-pencil-square-o' aria-hidden='true'></i></td>");
                         tr.append(td);
 
                     }
@@ -390,4 +402,178 @@ function visualizarPastGeneral() {
             alertify.alert(error);
         }
     });
+}
+
+function consultarInformacionPastGeneral(index) {
+
+    alertify.confirm('Mnesaje', 'Esta seguro de Editar el registro', function() {
+        //debugger;
+        var tipoDocumento = listarPastGeneral[index].TIPO_DOCUMENTO;
+        var documento = listarPastGeneral[index].DOCUMENTO;
+        var pNombre = listarPastGeneral[index].PRIMER_NOMBRE;
+        var sNombre = listarPastGeneral[index].SEGUNDO_NOMBRE;
+        var pApellido = listarPastGeneral[index].PRIMER_APELLIDO;
+        var sApellido = listarPastGeneral[index].SEGUNDO_APELLIDO;
+        var dep_id = listarPastGeneral[index].DEPARTAMENTO;
+        var ciu_id = listarPastGeneral[index].CIUDAD;
+        var barrio_id = listarPastGeneral[index].BARRIO;
+        var direccion = listarPastGeneral[index].DIRECCION;
+        var telefono = listarPastGeneral[index].TELEFONO;
+        var celular = listarPastGeneral[index].CELULAR;
+        var sexo = listarPastGeneral[index].SEXO;
+        var edad = listarPastGeneral[index].EDAD;
+        var etcCivil = listarPastGeneral[index].EST_CIVIL;
+        var min_id = listarPastGeneral[index].MINISTERIO_ID;
+        var codigo = listarPastGeneral[index].CODIGO;
+        var estado = listarPastGeneral[index].ESTADO_ID;
+        var past_id = listarPastGeneral[index].PASTGEN_ID;
+        var ter_id = listarPastGeneral[index].TER_ID;
+
+
+        $("#cmbTipoDocumentoPg").val(tipoDocumento);
+        $("#txtDocumentoPg").prop('disabled', true);
+        $("#txtDocumentoPg").val(documento);
+        $("#txtPrimerNombrePg").val(pNombre);
+        $("#txtSegundoNombrePg").val(sNombre);
+        $("#txtPrimerApellidoPg").val(pApellido);
+        $("#txtSegundoApellidoPg").val(sApellido);
+        setTimeout(() => {
+            $("#cmbDepartamentoPg").val(dep_id).change();
+        }, 500);
+        setTimeout(() => {
+            $("#cmbCiudadPg").val(ciu_id).change();
+        }, 1000);
+        setTimeout(() => {
+            $("#cmbBarrioPg").val(barrio_id).change();
+        }, 1500);
+        $("#txtDireccionpg").val(direccion);
+        $("#txtTelefonopg").val(telefono);
+        $("#txtCelularpg").val(celular);
+        $("#cmbSexoPg").val(sexo).change();
+        $("#txtEdadpg").val(edad);
+        $("#cmbEstadoCivilPg").val(etcCivil).change();
+        $("#cmbMinisterioPg").val(min_id).change();
+        $("#txtCodigopg").val(codigo);
+        $("#cmbEstado").val(estado).change();
+        $("txtIdPg").val(past_id);
+        $("txtTerPg_id").val(ter_id);
+        $("#txtEditarPg").val(1);
+
+        $("#btnGuardarPastorPg").html("Actualizar");
+
+
+    }, function() {});
+
+}
+
+function limpiarCampos() {
+    $("#cmbTipoDocumentoPg").val('');
+    $("#txtDocumentoPg").val('');
+    $("#txtEditarPg").val('');
+    $("#txtIdPg").val('');
+    $("#txtTerPg_id").val('');
+    $("#txtPrimerNombrePg").val('');
+    $("#txtSegundoNombrePg").val('');
+    $("#txtPrimerApellidoPg").val('');
+    $("#txtSegundoApellidoPg").val('');
+    $("#cmbDepartamentoPg").val('').change();
+    $("#cmbCiudadPg").val('').change();
+    $("#cmbBarrioPg").val('').change();
+    $("#txtDireccionpg").val('');
+    $("#txtTelefonopg").val('');
+    $("#txtCelularpg").val('');
+    $("#cmbSexoPg").val('');
+    $("#txtEdadpg").val('');
+    $("#cmbEstadoCivilPg").val('');
+    $("#cmbMinisterioPg").val('');
+    $("#txtCodigopg").val('');
+    $("#cmbEstado").val('');
+}
+//--VISTA PASTORES PRINCIPALES
+
+function listarPastoresGenerales(idCombo) {
+    var ur = CONTROLLERPASTORES;
+    var op = 10;
+    $.ajax({
+        type: "POST",
+        url: ur,
+        data: ({
+            op: op
+        }),
+        success: function(data) {
+            var ret = eval('(' + data + ')');
+            try {
+                $listarCombo = $("#" + idCombo);
+                $listarCombo.html('');
+                var option = $("<option value=''>Seleccione</option>");
+                $listarCombo.append(option);
+                for (var i = 0; i < ret.length; i++) {
+                    var option = $("<option  value = " + ret[i].ID + ">" + ret[i].DESCRIPCION + "</option>");
+                    $listarCombo.append(option);
+                }
+            } catch (e) {}
+        },
+        error: function(objeto, error, error2) {
+            alertify.alert(error);
+        }
+    });
+    
+}
+
+function validarCamposPastorPrincipal() {
+    var tipoDocumento = $("#cmbTipoDocumentoPp").val();
+    var numDocumento = $("#txtDocumentoPp").val();
+    var primerNombre = $("#txtPrimerNombrePp").val();
+    var segundoNombre = $("#txtSegundoNombrePp").val();
+    var primerApellido = $("#txtPrimerApellidoPp").val();
+    var segundoApellido = $("#txtSegundoApellidoPp").val();
+    var departamento = $("#cmbDepartamentoPp").val();
+    var ciudad = $("#cmbCiudadPp").val();
+    var barrios = $("#cmbBarrioPp").val();
+    var direccion = $("#txtDireccionPp").val();
+    var telefono = $("#txtTelefonoPp").val();
+    var celular = $("#txtCelularPp").val();
+    var sexo = $("#cmbSexoPp").val();
+    var edad = $("#txtEdadPp").val();
+    var estadoCivil = $("#cmbEstadoCivilPp").val();
+    var ministerio = $("#cmbMinisterioPp").val();
+    var codigoPastor = $("#txtCodigoPp").val();
+    var editarPp = $("#txtEditarPp").val();
+    var idPp = $("#txtIdPp").val();
+    var ter_id = $("#txtTerPp_id").val();
+    var estadoPp = $("#cmbEstadoPp").val();
+
+    if (tipoDocumento.length === 0) {
+        alertify.alert('Por favor seleccione tipo de documento');
+    } else if (numDocumento.length === 0) {
+        alertify.alert('Por favor diigitar el numero de documento');
+    } else if (primerNombre.length === 0) {
+        alertify.alert('El primer nombre no puede quedar vacio');
+    } else if (primerApellido.length === 0) {
+        alertify.alert('El primer apellido no puede quedar vacio');
+    } else if (departamento.length === 0) {
+        alertify.alert('Por favor seleccione un departamento');
+    } else if (ciudad.length === 0) {
+        alertify.alert('Por favor seleccione una ciudad');
+    } else if (barrios.length === 0) {
+        alertify.alert('Por favor seleccione un barrio');
+    } else if (direccion.length === 0) {
+        alertify.alert('Por favor digitar la direccion');
+    } else if (celular.length === 0) {
+        alertify.alert('Por favor digitar el numuero celular');
+    } else if (sexo.length === 0) {
+        alertify.alert('Por favor seleccione el sexo');
+    } else if (edad.length === 0) {
+        alertify.alert('La edad no puede quedar vacio');
+    } else if (estadoCivil.length === 0) {
+        alertify.alert('Por favor seleccione el estado civil');
+    } else if (ministerio.length === 0) {
+        alertify.alert('Por favor seleccione un ministerio');
+    } else if (codigoPastor.length === 0) {
+        alertify.alert('Por favor digitar el codigo pastor');
+    } else {
+        alertify.confirm('Mnesaje', 'Esta seguro de realizar el registro', function() {
+            registrarPastorGeneral(tipoDocumento, numDocumento, primerNombre, segundoNombre, primerApellido, segundoApellido, departamento, ciudad, barrios, direccion, telefono, celular, sexo, edad, estadoCivil, ministerio, codigoPastor, editarPg, idPg, estado, ter_id);
+        }, function() {});
+    }
 }

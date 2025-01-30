@@ -59,6 +59,7 @@ include_once '../../Operaciones.php';
                                         name="cmbTipoDocumentoPg"> </select>
                                     <input type="hidden" id="txtEditarPg" name="txtEditarPg" value="0" />
                                     <input type="hidden" id="txtIdPg" name="txtIdPg" />
+                                    <input type="hidden" id="txtTerPg_id" name="txtTerPg_id" />
                                 </div>
                                 <div class="col-md-2">
                                     <label><strong>Documento:</strong></label>
@@ -154,6 +155,13 @@ include_once '../../Operaciones.php';
                                         onkeyup="this.value = this.value.toUpperCase();" id="txtCodigopg"
                                         class="form-control input-sm solo-numero">
                                 </div>
+                                <div class="col-md-2">
+                                    <label><strong>Estado:</strong></label>
+                                    <select class="form-control input-sm " id="cmbEstado" name="cmbEstado">
+                                        <option value="A" selected>ACTIVO</option>
+                                        <option value="I">INACTIVO</option>
+                                    </select>
+                                </div>
                             </div><br><br>
                             <div class="row">
                                 <div class="col-md-12">
@@ -184,7 +192,153 @@ include_once '../../Operaciones.php';
                             </div>
                         </div>
                         <!--INICIO TABPANEL 2-->
-                        <div role="tabpanel" class="tab-pane" id="pastoresPrincipales">...</div>
+                        <div role="tabpanel" class="tab-pane" id="pastoresPrincipales">
+                            <div class="row">
+                                <br>
+                                <div class="col-md-2">
+                                    <label><strong>Pastor General:</strong></label>
+                                    <select class="form-control input-sm " id="cmbPastorGeneral"
+                                        name="cmbPastorGeneral"> </select>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <br>
+                                <div class="col-md-2">
+                                    <label><strong>Tipo de Documento:</strong></label>
+                                    <select class="form-control input-sm " id="cmbTipoDocumentoPp"
+                                        name="cmbTipoDocumentoPp"> </select>
+                                    <input type="hidden" id="txtEditarPp" name="txtEditarPp" value="0" />
+                                    <input type="hidden" id="txtIdPp" name="txtIdPp" />
+                                    <input type="hidden" id="txtTerPp_id" name="txtTerPp_id" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Documento:</strong></label>
+                                    <input type="text" name="txtDocumentoPp" id="txtDocumentoPp"
+                                        class="form-control  input-sm solo-numero">
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Primer nombre: </strong></label>
+                                    <input type="text" name="txtPrimerNombrePp"
+                                        onkeyup="this.value = this.value.toUpperCase();" id="txtPrimerNombrePp"
+                                        class="form-control  input-sm">
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Segundo nombre: </strong></label>
+                                    <input type="text" name="txtSegundoNombrePp"
+                                        onkeyup="this.value = this.value.toUpperCase();" id="txtSegundoNombrePp"
+                                        class="form-control  input-sm">
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Primer apellido: </strong></label>
+                                    <input type="text" name="txtPrimerApellidoPp"
+                                        onkeyup="this.value = this.value.toUpperCase();" id="txtPrimerApellidoPp"
+                                        class="form-control  input-sm">
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Segundo apellido: </strong></label>
+                                    <input type="text" name="txtSegundoApellidoPp"
+                                        onkeyup="this.value = this.value.toUpperCase();" id="txtSegundoApellidoPp"
+                                        class="form-control  input-sm">
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label><strong>Departamento:</strong></label>
+                                    <select class="form-control input-sm select2" style="width: 100%;"
+                                        id="cmbDepartamentoPp" name="cmbDepartamentoPp"
+                                        onchange="listarComboCiudad(this, 'cmbCiudadPp')"> </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Ciudad:</strong></label>
+                                    <select class="form-control input-sm select2" style="width: 100%;" id="cmbCiudadPp"
+                                        name="cmbCiudadPp" onchange="listarComboBarrio(this, 'cmbBarrioPp')"> </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Barrio:</strong></label>
+                                    <select class="form-control input-sm select2" id="cmbBarrioPp" style="width: 100%;"
+                                        name="cmbBarrioPp"> </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Direccion:</strong></label>
+                                    <input type="text" name="txtDireccionpp"
+                                        onkeyup="this.value = this.value.toUpperCase();" id="txtDireccionpp"
+                                        class="form-control  input-sm">
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Telefono:</strong></label>
+                                    <input type="text" name="txtTelefonoPp"
+                                        onkeyup="this.value = this.value.toUpperCase();" id="txtTelefonoPp"
+                                        class="form-control input-sm solo-numero">
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Celular:</strong></label>
+                                    <input type="text" name="txtCelularPp"
+                                        onkeyup="this.value = this.value.toUpperCase();" id="txtCelularPp"
+                                        class="form-control input-sm solo-numero">
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label><strong>Sexo:</strong></label>
+                                    <select class="form-control input-sm " id="cmbSexoPp" name="cmbSexoPp"> </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Edad:</strong></label>
+                                    <input type="text" name="txtEdadPp" onkeyup="this.value = this.value.toUpperCase();"
+                                        id="txtEdadPp" class="form-control input-sm solo-numero">
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Estado Civil:</strong></label>
+                                    <select class="form-control input-sm " id="cmbEstadoCivilPp"
+                                        name="cmbEstadoCivilPp"> </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Ministerio:</strong></label>
+                                    <select class="form-control input-sm " id="cmbMinisterioPp" name="cmbMinisterioPp">
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Codigo Pastor:</strong></label>
+                                    <input type="text" name="txtCodigoPp"
+                                        onkeyup="this.value = this.value.toUpperCase();" id="txtCodigoPp"
+                                        class="form-control input-sm solo-numero">
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Estado:</strong></label>
+                                    <select class="form-control input-sm " id="cmbEstadoPp" name="cmbEstadoPp">
+                                        <option value="A" selected>ACTIVO</option>
+                                        <option value="I">INACTIVO</option>
+                                    </select>
+                                </div>
+                            </div><br><br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label><strong>Filtro rapido:</strong></label>
+                                    <input type="text" name="txtFiltroPp"
+                                        onkeyup="this.value = this.value.toUpperCase();" id="txtFiltroUsuariosPp"
+                                        onclick="filtrarDatos('txtFiltroUsuariosPp', 'tblFiltrarUsuarioPp')"
+                                        class="form-control  input-sm">
+                                </div>
+                            </div><br><br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="divVisualizarPastPricipal"
+                                        style="overflow: auto; width: 100%; height: 320px">
+                                        <table id='tbl_visualizar_PastPrincipal' style=' font-size: 11px;'
+                                            class='table-hover table-condensed table-striped table-bordered  table  callback1'>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" name="btnGuardarPastorPp" id="btnGuardarPastorPp"
+                                    class="btn btn-primary btn-sm"><i class="fa fa-floppy-o" aria-hidden="true"></i>
+                                    Guardar</button>
+                                <button type="reset" name="btnCancelarPastorPp" id="btnCancelarPastorPp"
+                                    data-dismiss="modal" class="btn btn-warning btn-sm"><i class="fa fa-sign-out"
+                                        aria-hidden="true"></i> Cancelar</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>

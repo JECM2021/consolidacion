@@ -251,6 +251,87 @@ class mdlPastores extends conexion
                     "MINISTERIO" => $row['MINISTERIO'],
                     "ESTADO" => $row['ESTADO'],
                     "ESTADO_ID" => $row['ESTADO_ID'],
+                    "TIPO_DOCUMENTO" => $row['TIPO_DOCUMENTO'],
+                    "DOCUMENTO" => $row['DOCUMENTO'],
+                    "PRIMER_NOMBRE" => $row['PRIMER_NOMBRE'],
+                    "SEGUNDO_NOMBRE" => $row['SEGUNDO_NOMBRE'],
+                    "PRIMER_APELLIDO" => $row['PRIMER_APELLIDO'],
+                    "SEGUNDO_APELLIDO" => $row['SEGUNDO_APELLIDO'],
+                    "DEPARTAMENTO" => $row['DEPARTAMENTO'],
+                    "CIUDAD" => $row['CIUDAD'],
+                    "BARRIO" => $row['BARRIO'],
+                    "DIRECCION" => $row['DIRECCION'],
+                    "TELEFONO" => $row['TELEFONO'],
+                    "CELULAR" => $row['CELULAR'],
+                    "SEXO" => $row['SEXO'],
+                    "EDAD" => $row['EDAD'],
+                    "EST_CIVIL" => $row['EST_CIVIL'],
+                    "MINISTERIO_ID" => $row['MINISTERIO_ID']
+                );
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        try {
+            $this->descconectarBd($conexion);
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $rawdata;
+    }
+
+    function actualizarPastorGeneral(PastoresVO $PastoresVO, $idTer,$estado)
+    {
+        try {
+            $conexion = $this->conectarBd(self::CONSOLIDACION);
+            $respuesta = $conexion->prepare($this->getSql("ACTUALIZAR_PASTOR_GENERAL", self::RUTA_SQL));
+            $tipoDocumento = $PastoresVO->getTipoDocumento();
+            $numDocumento = $PastoresVO->getNumDocumento();
+            $primerNombre = $PastoresVO->getPrimerNombre();
+            $segundoNombre = $PastoresVO->getSegundoNombre();
+            $primerApellido = $PastoresVO->getPrimerApellido();
+            $segundoApellido = $PastoresVO->getSegundoApellido();
+            $departamento = $PastoresVO->getDepartamento();
+            $ciudad = $PastoresVO->getCiudad();
+            $barrios = $PastoresVO->getBarrios();
+            $direccion = $PastoresVO->getDireccion();
+            $telefono = $PastoresVO->getTelefono();
+            $celular = $PastoresVO->getCelular();
+            $sexo = $PastoresVO->getSexo();
+            $edad = $PastoresVO->getEdad();
+            $estadoCivil = $PastoresVO->getEstadoCivil();
+            $ministerio = $PastoresVO->getMinisterio();
+            $codigoPastor = $PastoresVO->getCodigoPastor();
+            $respuesta = $conexion->prepare($this->getSql("ACTUALIZAR_PASTOR_GENERAL", self::RUTA_SQL));
+            $respuesta->bind_param('ssssssssssssssss', $tipoDocumento, $numDocumento, $primerNombre, $segundoNombre, $primerApellido, $segundoApellido, $departamento, $ciudad, $barrios, $direccion, $telefono, $celular, $sexo, $edad, $estadoCivil, $idTer);
+            $filasAfectadas = $respuesta->execute() or ($respuesta->error);
+            if ($filasAfectadas > 0) {
+                $respuesta = $conexion->prepare($this->getSql("ACTUALIZAR_PASTORGENERAL_DETALLE", self::RUTA_SQL));
+                $respuesta->bind_param('ssss', $ministerio, $codigoPastor,$estado, $idTer);
+                $filasAfectadas = $respuesta->execute();
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        try {
+            $this->descconectarBd($conexion);
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $filasAfectadas;
+    }
+
+    function listarPastoresGenerales(){
+        $rawdata = array();
+        try {
+            $conexion = $this->conectarBd(self::CONSOLIDACION);
+            $respuesta = $conexion->prepare($this->getSql("LISTAR_PASTORES_GENERALES", self::RUTA_SQL));
+            $respuesta->execute();
+            $result = $respuesta->get_result();
+            while ($row = $result->fetch_assoc()) {
+                $rawdata[] = array(
+                    "ID" => $row['ID'],
+                    "DESCRIPCION" => $row['DESCRIPCION']
                 );
             }
         } catch (Exception $exc) {

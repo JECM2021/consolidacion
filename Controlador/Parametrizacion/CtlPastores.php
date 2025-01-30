@@ -39,6 +39,9 @@ switch ($op) {
     case 9:
         visualizarPastGeneral();
         break;
+    case 10: 
+        listarPastoresGenerales();
+        break;
 }
 
 
@@ -180,6 +183,8 @@ function registrarPastorGeneral()
     $codigoPastor = addslashes(htmlspecialchars($_POST["codigoPastor"]));
     $editarPg = addslashes(htmlspecialchars($_POST["editarPg"]));
     $idPg = addslashes(htmlspecialchars($_POST["idPg"]));
+    $idTer = addslashes(htmlspecialchars($_POST["ter_id"]));
+    $estado = addslashes(htmlspecialchars($_POST["estado"]));
     $PastoresVO = new PastoresVO();
     $PastoresVO->setTipoDocumento($tipoDocumento);
     $PastoresVO->setNumDocumento($numDocumento);
@@ -202,7 +207,7 @@ function registrarPastorGeneral()
     $statusJson = array();
     try {
         if ($editarPg == 1) {
-            $parametrosPg = $mdlPastores->actualizarPastorGeneral($PastoresVO);
+            $parametrosPg = $mdlPastores->actualizarPastorGeneral($PastoresVO, $idTer, $estado);
             $msj =  "Pastor general Actualizado correctamente";
         } else {
             $parametrosPg = $mdlPastores->registrarPastorGeneral($PastoresVO);
@@ -228,6 +233,25 @@ function visualizarPastGeneral()
         if ($listaRegistro !== null) {
             $json = json_encode($listaRegistro);
             echo $json;
+        }
+    } catch (Exception $exc) {
+        echo $exc->getTraceAsString();
+    }
+}
+
+//--CONTROLADOR PASTORES PRINCIPALES
+
+function listarPastoresGenerales()
+{
+    $mdlPastores = new mdlPastores();
+    try {
+
+        $listarPastoresGenerales = $mdlPastores->listarPastoresGenerales();
+        if ($listarPastoresGenerales !== null) {
+            $json = json_encode($listarPastoresGenerales);
+            echo $json;
+        } else {
+            echo "Lita vacia.";  // devolver en un arreglos , es por esta la razon que en el json se presenta error.
         }
     } catch (Exception $exc) {
         echo $exc->getTraceAsString();

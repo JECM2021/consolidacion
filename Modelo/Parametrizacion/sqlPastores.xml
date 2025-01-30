@@ -89,20 +89,79 @@
     <VISUALIZAR_PASTORES_GENERAL>
         <sql>
             SELECT
+            TER.TIP_ID AS TIPO_DOCUMENTO,
+            TER.TER_DOCUMENTO AS DOCUMENTO,
+            TER.TER_PRIMER_NOMBRE AS PRIMER_NOMBRE,
+            TER.TER_SEGUNDO_NOMBRE AS SEGUNDO_NOMBRE,
+            TER.TER_PRIMER_APELLIDO AS PRIMER_APELLIDO,
+            TER.TER_SEGUNDO_APELLIDO AS SEGUNDO_APELLIDO,
+            TER.DEP_ID AS DEPARTAMENTO,
+            TER.CIU_ID AS CIUDAD,
+            TER.TER_BARRIO AS BARRIO,
+            TER.TER_DIRECCION AS DIRECCION,
+            TER.TER_TELEFONO AS TELEFONO,
+            TER.TER_CELULAR AS CELULAR,
+            TER.SEX_ID AS SEXO,
+            TER.TER_EDAD AS EDAD,
+            TER.ETC_ID AS EST_CIVIL,
+            PAST.MIN_ID AS MINISTERIO_ID,
             PAST.PASTORES_COD AS CODIGO,
-            CONCAT(TER.TER_PRIMER_NOMBRE,' ',TER.TER_SEGUNDO_NOMBRE,' ',TER.TER_PRIMER_APELLIDO,' ',TER.TER_SEGUNDO_APELLIDO) AS NOMBRE,
-            UPPER(mint.min_descripcion) as MINISTERIO,
+            CONCAT( TER.TER_PRIMER_NOMBRE, ' ', TER.TER_SEGUNDO_NOMBRE, ' ', TER.TER_PRIMER_APELLIDO, ' ', TER.TER_SEGUNDO_APELLIDO ) AS NOMBRE,
+            UPPER( MINT.MIN_DESCRIPCION ) AS MINISTERIO,
             PAST.PAST_ESTADO AS ESTADO_ID,
             CASE
-            WHEN PAST.PAST_ESTADO = 'A' THEN 'ACTIVO'
-            WHEN PAST.PAST_ESTADO = 'I' THEN 'INACTIVO'
-            END	AS ESTADO,
+            WHEN PAST.PAST_ESTADO = 'A' THEN
+            'ACTIVO' 
+            WHEN PAST.PAST_ESTADO = 'I' THEN
+            'INACTIVO' 
+            END AS ESTADO,
             TER.TER_ID AS TER_ID,
-            PAST.PATORES_ID AS PASTGEN_ID
+            PAST.PATORES_ID AS PASTGEN_ID 
             FROM
             PASTORES PAST
             INNER JOIN TERCEROS TER ON TER.TER_ID = PAST.TER_ID
             INNER JOIN MINISTERIOS MINT ON MINT.MIN_ID = PAST.MIN_ID
         </sql>
     </VISUALIZAR_PASTORES_GENERAL>
+    <ACTUALIZAR_PASTOR_GENERAL>
+        <sql>
+            UPDATE TERCEROS SET
+            TIP_ID = ?,
+            TER_DOCUMENTO = ?,
+            TER_PRIMER_NOMBRE = ?,
+            TER_SEGUNDO_NOMBRE = ?,
+            TER_PRIMER_APELLIDO = ?,
+            TER_SEGUNDO_APELLIDO = ?,
+            DEP_ID = ?,
+            CIU_ID = ?,
+            TER_BARRIO = ?,
+            TER_DIRECCION = ?,
+            TER_TELEFONO = ?,
+            TER_CELULAR = ?,
+            SEX_ID = ?,
+            TER_EDAD = ?,
+            ETC_ID = ?
+            WHERE TER_ID = ?
+        </sql>
+    </ACTUALIZAR_PASTOR_GENERAL>
+    <ACTUALIZAR_PASTORGENERAL_DETALLE>
+        <sql>
+            UPDATE pastores SET
+            min_id = ?,
+            pastores_cod = ?,
+            past_estado = ?
+            WHERE ter_id = ?
+        </sql>
+    </ACTUALIZAR_PASTORGENERAL_DETALLE>
+    <LISTAR_PASTORES_GENERALES>
+        <sql>
+            SELECT
+            PG.PATORES_ID AS ID,
+            CONCAT(TER.TER_PRIMER_NOMBRE,' ',TER.TER_SEGUNDO_NOMBRE,' ', TER.TER_PRIMER_APELLIDO,' ',TER.TER_SEGUNDO_APELLIDO) AS DESCRIPCION
+            FROM
+            PASTORES PG
+            INNER JOIN TERCEROS TER ON TER.TER_ID = PG.TER_ID
+            WHERE PG.PAST_ESTADO = 'A'
+        </sql>
+    </LISTAR_PASTORES_GENERALES>
 </root>
