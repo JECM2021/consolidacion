@@ -1,0 +1,34 @@
+<root>
+    <VISUALIZAR_MINISTERIOS>
+        <sql>
+            SELECT
+            MIN.MIN_ID AS ID,
+            UPPER(MIN.MIN_DESCRIPCION) AS MINISTERIO,
+            MIN.MIN_ESTADO AS ESTADO
+            FROM
+            MINISTERIOS MIN 
+        </sql>
+    </VISUALIZAR_MINISTERIOS>
+    <CONSULTAR_NOMBRE_MINISTERIO>
+        <sql>
+            SELECT
+            MIN.MIN_DESCRIPCION
+            FROM
+            MINISTERIOS MIN
+            WHERE MIN.MIN_DESCRIPCION = ?
+        </sql>
+    </CONSULTAR_NOMBRE_MINISTERIO>
+    <REGISTRAR_MINISTERIO>
+        <sql>
+            INSERT INTO MINISTERIOS (MIN_DESCRIPCION, MIN_ESTADO)VALUES (?,?);
+        </sql>
+    </REGISTRAR_MINISTERIO>
+    <ACTUALIZAR_MINISTERIO>
+        <sql>
+            UPDATE MINISTERIOS SET
+            MIN_DESCRIPCION = ?,
+            MIN_ESTADO = ?
+            WHERE MIN_ID = ?
+        </sql>
+    </ACTUALIZAR_MINISTERIO>
+</root>

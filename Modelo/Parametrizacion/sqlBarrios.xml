@@ -1,0 +1,21 @@
+<root>
+    <LISTAR_DEPARTAMENTOS>
+        <sql>
+            SELECT
+            DEP_ID AS ID,
+            UPPER(DEP_DESCRIPCION) AS DESCRIPCION	
+            FROM
+            DEPARTAMENTO;
+        </sql>
+    </LISTAR_DEPARTAMENTOS>
+     <LISTAR_CIUDADES>
+        <sql>
+            SELECT
+            CIU_ID AS ID,
+            CIU_DESCRIPCION AS DESCRIPCION	
+            FROM
+            CIUDAD 
+            WHERE DEP_ID = ?;
+        </sql>
+    </LISTAR_CIUDADES>
+</root>
