@@ -78,4 +78,22 @@ class mdlCrearMinisterio extends conexion
         }
         return $filasAfectadas;
     }
+
+    function eliminarInformacionMinisterio($idMin)
+    {
+        try {
+            $conexion = $this->conectarBd(self::CONSOLIDACION);
+            $respuesta = $conexion->prepare($this->getSql("ELIMINAR_MINISTERIO", self::RUTA_SQL));
+            $respuesta->bind_param('s', $idMin);
+            $filasAfectadas = $respuesta->execute() or ($respuesta->error);
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        try {
+            $this->descconectarBd($conexion);
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $filasAfectadas;
+    }
 }

@@ -16,6 +16,9 @@ switch ($op) {
     case 2:
         registrarMinisterio();
         break;
+    case  3:
+        eliminarInformacionMinisterio();
+        break;
 }
 
 function visualizarMinisterios()
@@ -54,6 +57,24 @@ function registrarMinisterio()
             $statusJson["success"] = $msj;
         } else {
             $statusJson["error"] = "error al generar registro";
+        }
+        echo json_encode($statusJson);
+    } catch (Exception $exc) {
+        echo $exc->getTraceAsString();
+    }
+}
+
+function eliminarInformacionMinisterio()
+{
+    $mdlCrearMinisterio = new mdlCrearMinisterio();
+    $idMin = addslashes(htmlspecialchars($_POST['idMin']));
+    try {
+        $eliminarMinisterio = $mdlCrearMinisterio->eliminarInformacionMinisterio($idMin);
+        $msj = "Ministerio eliminado correctamente";
+        if ($eliminarMinisterio > 0) {
+            $statusJson["success"] = $msj;
+        } else {
+            $statusJson["error"] = "Error al momento de eliminar el registro";
         }
         echo json_encode($statusJson);
     } catch (Exception $exc) {

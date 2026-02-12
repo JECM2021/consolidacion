@@ -31,4 +31,9 @@
             WHERE MIN_ID = ?
         </sql>
     </ACTUALIZAR_MINISTERIO>
+    <ELIMINAR_MINISTERIO>
+        <sql>
+            DELETE FROM MINISTERIOS WHERE MIN_ID = ?;
+        </sql>
+    </ELIMINAR_MINISTERIO>
 </root>
