@@ -12,7 +12,7 @@ include_once '../../Operaciones.php';
     include '../../webPage/imports/imports.php';
     ?>
     <script>
-    var CONTROLLERBARRIOS = "../../Controlador/Parametrizacion/CtlBarrios.php";
+        var CONTROLLERBARRIOS = "../../Controlador/Parametrizacion/CtlBarrios.php";
     </script>
 
     <script src="Barrios.js?v=<?php echo (rand()); ?>"></script>
@@ -55,19 +55,21 @@ include_once '../../Operaciones.php';
                                 <label><strong>Nombre del Barrio:</strong></label>
                                 <input type="text" name="txtBarrio" onkeyup="this.value = this.value.toUpperCase();"
                                     id="txtBarrio" class="form-control  input-sm">
+                                <input type="hidden" id="txtEditarBarrio" name="txtEditarBarrio" value="0" />
+                                <input type="hidden" id="txtIdBarrio" name="txtIdBarrio" />
                             </div>
-                            <div class="col-md-1">
-                                <label><br></label>
-                                <button type="button" name="btnGuardarMinisterios" id="btnGuardarMinisterios"
+                            <!--<div class="col-md-1">
+                                <label><br>&nbsp</label>
+                                <button type="button" name="btnGuardarBarrio" id="btnGuardarBarrio"
                                     class="btn btn-primary btn-sm"><i class="fa fa-floppy-o" aria-hidden="true"></i>
                                     Guardar</button>
                             </div>
                             <div class="col-md-1">
-                                <label><br></label>
-                                <button type="reset" name="btnCancelarMinisterios" id="btnCancelarMinisterios"
+                                <label><br>&nbsp</label>
+                                <button type="reset" name="btnCancelarBarrio" id="btnCancelarBarrio"
                                     data-dismiss="modal" class="btn btn-warning btn-sm"><i class="fa fa-sign-out"
                                         aria-hidden="true"></i> Cancelar</button>
-                            </div>
+                            </div>-->
                         </div><br><br>
                         <div class="row">
                             <div class="col-md-12">
@@ -80,20 +82,20 @@ include_once '../../Operaciones.php';
                         </div><br><br>
                         <div class="row">
                             <div class="col-md-12">
-                                <div id="divVisualizarMinisterio" style="overflow: auto; width: 100%; height: 320px">
-                                    <table id='tbl_visualizar_Ministerios' style=' font-size: 11px;'
+                                <div id="divVisualizarBarrios" style="overflow: auto; width: 100%; height: 320px">
+                                    <table id='tbl_visualizar_Barrios' style=' font-size: 11px;'
                                         class='table-hover table-condensed table-striped table-bordered  table  callback1'>
                                     </table>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <!--<button type="button" name="btnGuardarMinisterios" id="btnGuardarMinisterios"
+                            <button type="button" name="btnGuardarBarrio" id="btnGuardarBarrio"
                                 class="btn btn-primary btn-sm"><i class="fa fa-floppy-o" aria-hidden="true"></i>
                                 Guardar</button>
-                            <button type="reset" name="btnCancelarMinisterios" id="btnCancelarMinisterios"
+                            <button type="reset" name="btnCancelarBarrio" id="btnCancelarBarrio"
                                 data-dismiss="modal" class="btn btn-warning btn-sm"><i class="fa fa-sign-out"
-                                    aria-hidden="true"></i> Cancelar</button>-->
+                                    aria-hidden="true"></i> Cancelar</button>
                         </div>
                     </div>
                 </div>
@@ -120,18 +122,18 @@ include_once '../../Operaciones.php';
         ?>
     </div>
     <script>
-    $(".solo-numero").keydown(function(event) {
-        //alert(event.keyCode);
-        if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105) && event
-            .keyCode !== 190 && event.keyCode !== 110 && event.keyCode !== 8 && event.keyCode !== 9) {
-            return false;
-        }
-    });
+        $(".solo-numero").keydown(function(event) {
+            //alert(event.keyCode);
+            if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105) && event
+                .keyCode !== 190 && event.keyCode !== 110 && event.keyCode !== 8 && event.keyCode !== 9) {
+                return false;
+            }
+        });
     </script>
     <script>
-    $(function() {
-        $('.select2').select2();
-    });
+        $(function() {
+            $('.select2').select2();
+        });
     </script>
 </body>
 

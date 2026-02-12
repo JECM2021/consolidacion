@@ -18,4 +18,41 @@
             WHERE DEP_ID = ?;
         </sql>
     </LISTAR_CIUDADES>
+    <CONSULTAR_NOMBRE_BARRIO>
+        <sql>
+            SELECT
+            BR.BARRIO_DESCRIPCION 
+            FROM
+            BARRIOS BR
+            WHERE BR.BARRIO_DESCRIPCION = ?
+        </sql>
+    </CONSULTAR_NOMBRE_BARRIO>
+    <REGISTRAR_BARRIO>
+        <sql>
+            INSERT INTO BARRIOS (BARRIO_DESCRIPCION, CIUD_ID)VALUES(?,?);
+        </sql>
+    </REGISTRAR_BARRIO>
+    <VISUALIZAR_BARRIOS>
+        <sql>
+            SELECT
+            BRR.BARRIO_ID AS ID,
+            DEPT.DEP_ID AS IDDEPT,
+	        CIU.CIU_ID AS IDCUID,
+            UPPER(DEPT.DEP_DESCRIPCION) AS DEPARTAMENTO,
+            UPPER(CIU.CIU_DESCRIPCION) AS CIUDAD,
+            UPPER(BRR.BARRIO_DESCRIPCION) AS BARRIO
+            FROM
+            BARRIOS BRR
+            INNER JOIN CIUDAD CIU ON CIU.CIU_ID = BRR.CIUD_ID
+            INNER JOIN DEPARTAMENTO DEPT ON DEPT.DEP_ID = CIU.DEP_ID
+        </sql>
+    </VISUALIZAR_BARRIOS>
+    <ACTUALIZAR_BARRIOS>
+        <sql>
+            UPDATE BARRIOS SET
+            BARRIO_DESCRIPCION =?,
+            CIUD_ID = ?
+            WHERE BARRIO_ID = ?
+        </sql>
+    </ACTUALIZAR_BARRIOS>
 </root>
