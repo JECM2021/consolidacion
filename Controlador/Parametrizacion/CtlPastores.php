@@ -39,8 +39,14 @@ switch ($op) {
     case 9:
         visualizarPastGeneral();
         break;
-    case 10: 
+    case 10:
         listarPastoresGenerales();
+        break;
+    case 11:
+        registrarPastorPrincipal();
+        break;
+    case 12:
+        visualizarPastPrincipal();
         break;
 }
 
@@ -252,6 +258,67 @@ function listarPastoresGenerales()
             echo $json;
         } else {
             echo "Lita vacia.";  // devolver en un arreglos , es por esta la razon que en el json se presenta error.
+        }
+    } catch (Exception $exc) {
+        echo $exc->getTraceAsString();
+    }
+}
+
+function registrarPastorPrincipal()
+{
+    $mdlPastores = new mdlPastores();
+    $tipoDocumento = addslashes(htmlspecialchars($_POST["tipoDocumento"]));
+    $numDocumento = addslashes(htmlspecialchars($_POST['numDocumento']));
+    $primerNombre = addslashes(htmlspecialchars($_POST['primerNombre']));
+    $segundoNombre = addslashes(htmlspecialchars($_POST['segundoNombre']));
+    $primerApellido = addslashes(htmlspecialchars($_POST['primerApellido']));
+    $segundoApellido = addslashes(htmlspecialchars($_POST['segundoApellido']));
+    $departamento = addslashes(htmlspecialchars($_POST['departamento']));
+    $ciudad = addslashes(htmlspecialchars($_POST['ciudad']));
+    $barrios = addslashes(htmlspecialchars($_POST['barrios']));
+    $direccion = addslashes(htmlspecialchars($_POST['direccion']));
+    $telefono = addslashes(htmlspecialchars($_POST['telefono']));
+    $celular = addslashes(htmlspecialchars($_POST['celular']));
+    $sexo = addslashes(htmlspecialchars($_POST['sexo']));
+    $edad = addslashes(htmlspecialchars($_POST['edad']));
+    $estadoCivil = addslashes(htmlspecialchars($_POST['estadoCivil']));
+    $ministerio = addslashes(htmlspecialchars($_POST['ministerio']));
+    $codigoPastor = addslashes(htmlspecialchars($_POST['codigoPastor']));
+    $idPg = addslashes(htmlspecialchars($_POST['idPg']));
+    $ter_id = addslashes(htmlspecialchars($_POST['ter_id']));
+    $editarPp = addslashes(htmlspecialchars($_POST['editarPp']));
+    $idPp = addslashes(htmlspecialchars($_POST['idPp']));
+    $estadoPp = addslashes(htmlspecialchars($_POST['estadoPp']));
+    $statusJson = array();
+
+    try {
+        if ($editarPp == 1) {
+            $parametrosPp = $mdlPastores->actualizarPastorPrinciapl($tipoDocumento, $numDocumento, $primerNombre, $segundoNombre, $primerApellido, $segundoApellido, $departamento, $ciudad, $barrios, $direccion, $telefono, $celular, $sexo, $edad, $estadoCivil, $ministerio, $codigoPastor, $idPg, $ter_id, $estadoPp, $idPp);
+            $msj =  "Pastor general Actualizado correctamente";
+        } else {
+            $parametrosPp = $mdlPastores->registrarPastorPrincipal($tipoDocumento, $numDocumento, $primerNombre, $segundoNombre, $primerApellido, $segundoApellido, $departamento, $ciudad, $barrios, $direccion, $telefono, $celular, $sexo, $edad, $estadoCivil, $ministerio, $codigoPastor, $idPg, $estadoPp);
+            $msj =  "Pastor General guardando correctamente";
+        }
+
+        if ($parametrosPp > 0) {
+            $statusJson["success"] = $msj;
+        } else {
+            $statusJson["error"] = "El codigo ya se encentra creado";
+        }
+        echo json_encode($statusJson);
+    } catch (Exception $exc) {
+        echo $exc->getTraceAsString();
+    }
+}
+
+function visualizarPastPrincipal()
+{
+    $mdlPastores = new mdlPastores();
+    try {
+        $listaRegistro = $mdlPastores->visualizarPastPrincipal();
+        if ($listaRegistro !== null) {
+            $json = json_encode($listaRegistro);
+            echo $json;
         }
     } catch (Exception $exc) {
         echo $exc->getTraceAsString();

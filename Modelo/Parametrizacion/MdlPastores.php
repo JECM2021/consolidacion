@@ -280,7 +280,7 @@ class mdlPastores extends conexion
         return $rawdata;
     }
 
-    function actualizarPastorGeneral(PastoresVO $PastoresVO, $idTer,$estado)
+    function actualizarPastorGeneral(PastoresVO $PastoresVO, $idTer, $estado)
     {
         try {
             $conexion = $this->conectarBd(self::CONSOLIDACION);
@@ -307,7 +307,7 @@ class mdlPastores extends conexion
             $filasAfectadas = $respuesta->execute() or ($respuesta->error);
             if ($filasAfectadas > 0) {
                 $respuesta = $conexion->prepare($this->getSql("ACTUALIZAR_PASTORGENERAL_DETALLE", self::RUTA_SQL));
-                $respuesta->bind_param('ssss', $ministerio, $codigoPastor,$estado, $idTer);
+                $respuesta->bind_param('ssss', $ministerio, $codigoPastor, $estado, $idTer);
                 $filasAfectadas = $respuesta->execute();
             }
         } catch (Exception $exc) {
@@ -321,7 +321,8 @@ class mdlPastores extends conexion
         return $filasAfectadas;
     }
 
-    function listarPastoresGenerales(){
+    function listarPastoresGenerales()
+    {
         $rawdata = array();
         try {
             $conexion = $this->conectarBd(self::CONSOLIDACION);
@@ -332,6 +333,87 @@ class mdlPastores extends conexion
                 $rawdata[] = array(
                     "ID" => $row['ID'],
                     "DESCRIPCION" => $row['DESCRIPCION']
+                );
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        try {
+            $this->descconectarBd($conexion);
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $rawdata;
+    }
+
+    function registrarPastorPrincipal($tipoDocumento, $numDocumento, $primerNombre, $segundoNombre, $primerApellido, $segundoApellido, $departamento, $ciudad, $barrios, $direccion, $telefono, $celular, $sexo, $edad, $estadoCivil, $ministerio, $codigoPastor, $idPg, $estadoPp)
+    {
+        try {
+            $conexion = $this->conectarBd(self::CONSOLIDACION);
+            $respuesta = $conexion->prepare($this->getSql("CONSULTAR_CODIGO_PASTOR_PRINCIPAL", self::RUTA_SQL));
+            $respuesta->bind_param('s', $codigoPastor);
+            $respuesta->execute();
+            $resultado = $respuesta->get_result();
+            $row = $resultado->fetch_assoc();
+            if (count($row) === 0) {
+                $respuesta = $conexion->prepare($this->getSql("AGREGAR_PASTOR_PRINCIPAL", self::RUTA_SQL));
+                $respuesta->bind_param('sssssssssssssss', $tipoDocumento, $numDocumento, $primerNombre, $segundoNombre, $primerApellido, $segundoApellido, $departamento, $ciudad, $barrios, $direccion, $telefono, $celular, $sexo, $edad, $estadoCivil);
+                $filasAfectadas = $respuesta->execute() or ($respuesta->error);
+                $idter = mysqli_insert_id($conexion);
+                if ($filasAfectadas > 0) {
+                    $respuesta = $conexion->prepare($this->getSql("AGREGAR_PASTORPRINCIPAL_DETALLE", self::RUTA_SQL));
+                    $respuesta->bind_param('sssss', $idter, $ministerio, $codigoPastor, $idPg, $estadoPp);
+
+                    $filasAfectadas = $respuesta->execute();
+                }
+            } else {
+                $filasAfectadas = $respuesta->error;
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        try {
+            $this->descconectarBd($conexion);
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $filasAfectadas;
+    }
+
+    function visualizarPastPrincipal()
+    {
+        $rawdata = array();
+        try {
+            $conexion = $this->conectarBd(self::CONSOLIDACION);
+            $respuesta = $conexion->prepare($this->getSql("VISUALIZAR_PASTORES_PRINCIPAL", self::RUTA_SQL));
+            $respuesta->execute();
+            $result = $respuesta->get_result();
+            while ($row = $result->fetch_assoc()) {
+                $rawdata[] = array(
+                    "ID_PP" => $row['ID_PP'],
+                    "ID_PG" => $row['ID_PG'],
+                    "TIPO_DOC" => $row['TIPO_DOC'],
+                    "DOCUMENTO" => $row['DOCUMENTO'],
+                    "PRIMER_NOMBRE" => $row['PRIMER_NOMBRE'],
+                    "SEGUNDO_NOMBRE" => $row['SEGUNDO_NOMBRE'],
+                    "PRIMER_APELLIDO" => $row['PRIMER_APELLIDO'],
+                    "SEGUNDO_APELLIDO" => $row['SEGUNDO_APELLIDO'],
+                    "NOMBRE" => $row['NOMBRE'],
+                    "DEPT" => $row['DEPT'],
+                    "CIU" => $row['CIU'],
+                    "BARRIO" => $row['BARRIO'],
+                    "DIRECCION" => $row['DIRECCION'],
+                    "TELEFONO" => $row['TELEFONO'],
+                    "CELULAR" => $row['CELULAR'],
+                    "SEXO" => $row['SEXO'],
+                    "EDAD" => $row['EDAD'],
+                    "CIVIL" => $row['CIVIL'],
+                    "ID_MINISTERIO" => $row['ID_MINISTERIO'],
+                    "COD_PP" => $row['COD_PP'],
+                    "PASTORGENERAL" => $row['PASTORGENERAL'],
+                    "MINISTERIO" => $row['MINISTERIO'],
+                    "ID_ESTADO" => $row['ID_ESTADO'],
+                    "ESTADO" => $row['ESTADO']
                 );
             }
         } catch (Exception $exc) {

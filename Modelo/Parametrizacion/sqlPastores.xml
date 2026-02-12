@@ -3,7 +3,7 @@
         <sql>
             SELECT
             TIP_ID AS ID,
-            TIP_DESCRIPCION AS DESCRIPCION
+            UPPER(TIP_DESCRIPCION) AS DESCRIPCION
             FROM
             TIPO_DOCUMENTO;
         </sql>
@@ -12,7 +12,7 @@
         <sql>
             SELECT
             SEX_ID AS ID,
-            SEX_DESCRIPCION AS DESCRIPCION	
+            UPPER(SEX_DESCRIPCION) AS DESCRIPCION	
             FROM
             SEXO;
         </sql>
@@ -21,7 +21,7 @@
         <sql>
             SELECT
             DEP_ID AS ID,
-            DEP_DESCRIPCION AS DESCRIPCION	
+            UPPER(DEP_DESCRIPCION) AS DESCRIPCION	
             FROM
             DEPARTAMENTO;
         </sql>
@@ -30,7 +30,7 @@
         <sql>
             SELECT
             CIU_ID AS ID,
-            CIU_DESCRIPCION AS DESCRIPCION	
+            UPPER(CIU_DESCRIPCION) AS DESCRIPCION	
             FROM
             CIUDAD 
             WHERE DEP_ID = ?;
@@ -40,7 +40,7 @@
         <sql>
             SELECT
             BARRIO_ID AS ID,
-            BARRIO_DESCRIPCION AS DESCRIPCION 
+            UPPER(BARRIO_DESCRIPCION) AS DESCRIPCION 
             FROM
             BARRIOS 
             WHERE
@@ -51,7 +51,7 @@
         <sql>
             SELECT
             ETC_ID AS ID,
-            ETC_DESCRIPCION AS DESCRIPCION	
+            UPPER(ETC_DESCRIPCION) AS DESCRIPCION	
             FROM
             ESTADO_CIVIL;
         </sql>
@@ -60,7 +60,7 @@
         <sql>
             SELECT
             MIN_ID AS ID,
-            MIN_DESCRIPCION AS DESCRIPCION	
+            UPPER(MIN_DESCRIPCION) AS DESCRIPCION	
             FROM
             MINISTERIOS;
         </sql>
@@ -164,4 +164,80 @@
             WHERE PG.PAST_ESTADO = 'A'
         </sql>
     </LISTAR_PASTORES_GENERALES>
+    <CONSULTAR_CODIGO_PASTOR_PRINCIPAL>
+        <sql>
+            SELECT
+            COD_PASTORP 
+            FROM
+            PASTORES_PRINCIPALES 
+            WHERE
+            COD_PASTORP = ?
+        </sql>
+    </CONSULTAR_CODIGO_PASTOR_PRINCIPAL>
+    <AGREGAR_PASTOR_PRINCIPAL>
+        <sql>
+            INSERT INTO TERCEROS (
+            TIP_ID,
+            TER_DOCUMENTO,
+            TER_PRIMER_NOMBRE,
+            TER_SEGUNDO_NOMBRE,
+            TER_PRIMER_APELLIDO,
+            TER_SEGUNDO_APELLIDO,
+            DEP_ID,
+            CIU_ID,
+            TER_BARRIO,
+            TER_DIRECCION,
+            TER_TELEFONO,
+            TER_CELULAR,
+            SEX_ID,
+            TER_EDAD,
+            ETC_ID 
+            )
+            VALUES
+            (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
+        </sql>
+    </AGREGAR_PASTOR_PRINCIPAL>
+    <AGREGAR_PASTORPRINCIPAL_DETALLE>
+        <sql>
+            INSERT INTO PASTORES_PRINCIPALES(TER_ID,MIN_ID,COD_PASTORP, PASTOR_ID,PASTORP_ESTADO)VALUES(?,?,?,?,?);
+        </sql>
+    </AGREGAR_PASTORPRINCIPAL_DETALLE>
+    <VISUALIZAR_PASTORES_PRINCIPAL>
+        <sql>
+            SELECT
+            TER.TER_ID AS ID_PP,
+            PP.PASTOR_ID AS ID_PG,
+            TER.TIP_ID AS TIPO_DOC,
+            TER.TER_DOCUMENTO AS DOCUMENTO,
+            TER.TER_PRIMER_NOMBRE AS PRIMER_NOMBRE,
+            TER.TER_SEGUNDO_NOMBRE AS SEGUNDO_NOMBRE,
+            TER.TER_PRIMER_APELLIDO AS PRIMER_APELLIDO,
+            TER.TER_SEGUNDO_APELLIDO AS SEGUNDO_APELLIDO,
+            CONCAT(TER.TER_PRIMER_NOMBRE,' ',TER.TER_SEGUNDO_NOMBRE,' ',TER.TER_PRIMER_APELLIDO,' ',TER.TER_SEGUNDO_APELLIDO) AS NOMBRE,
+            TER.DEP_ID AS DEPT,
+            TER.CIU_ID AS CIU,
+            TER.TER_BARRIO AS BARRIO,
+            TER.TER_DIRECCION AS DIRECCION,
+            TER.TER_TELEFONO AS TELEFONO,
+            TER.TER_CELULAR AS CELULAR,
+            TER.SEX_ID AS SEXO,
+            TER.TER_EDAD AS EDAD,
+            TER.ETC_ID AS CIVIL,
+            PP.MIN_ID AS ID_MINISTERIO,
+            PP.COD_PASTORP AS COD_PP,
+            CONCAT(TERPG.TER_PRIMER_NOMBRE,' ',TERPG.TER_SEGUNDO_NOMBRE,' ',TERPG.TER_PRIMER_APELLIDO,' ',TERPG.TER_SEGUNDO_APELLIDO) AS PASTORGENERAL,
+            UPPER(MIN.MIN_DESCRIPCION) AS MINISTERIO,
+            PP.PASTORP_ESTADO AS ID_ESTADO,
+	        CASE 
+			WHEN PP.PASTORP_ESTADO = "A" THEN "ACTIVO"
+			ELSE "INACTIVO"
+	        END AS ESTADO
+            FROM
+            TERCEROS TER
+            INNER JOIN PASTORES_PRINCIPALES PP ON PP.TER_ID = TER.TER_ID
+            INNER JOIN PASTORES P ON P.PATORES_ID = PP.PASTOR_ID
+            INNER JOIN TERCEROS TERPG ON TERPG.TER_ID = P.TER_ID
+            INNER JOIN MINISTERIOS MIN ON MIN.MIN_ID = PP.MIN_ID
+        </sql>
+    </VISUALIZAR_PASTORES_PRINCIPAL>
 </root>

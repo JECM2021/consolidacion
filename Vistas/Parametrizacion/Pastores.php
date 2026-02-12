@@ -12,7 +12,7 @@ include_once '../../Operaciones.php';
     include '../../webPage/imports/imports.php';
     ?>
     <script>
-    var CONTROLLERPASTORES = "../../Controlador/Parametrizacion/CtlPastores.php";
+        var CONTROLLERPASTORES = "../../Controlador/Parametrizacion/CtlPastores.php";
     </script>
 
     <script src="Pastores.js?v=<?php echo (rand()); ?>"></script>
@@ -260,8 +260,8 @@ include_once '../../Operaciones.php';
                                 </div>
                                 <div class="col-md-2">
                                     <label><strong>Direccion:</strong></label>
-                                    <input type="text" name="txtDireccionpp"
-                                        onkeyup="this.value = this.value.toUpperCase();" id="txtDireccionpp"
+                                    <input type="text" name="txtDireccionPp"
+                                        onkeyup="this.value = this.value.toUpperCase();" id="txtDireccionPp"
                                         class="form-control  input-sm">
                                 </div>
                                 <div class="col-md-2">
@@ -366,18 +366,18 @@ include_once '../../Operaciones.php';
         ?>
     </div>
     <script>
-    $(".solo-numero").keydown(function(event) {
-        //alert(event.keyCode);
-        if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105) && event
-            .keyCode !== 190 && event.keyCode !== 110 && event.keyCode !== 8 && event.keyCode !== 9) {
-            return false;
-        }
-    });
+        $(".solo-numero").keydown(function(event) {
+            //alert(event.keyCode);
+            if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105) && event
+                .keyCode !== 190 && event.keyCode !== 110 && event.keyCode !== 8 && event.keyCode !== 9) {
+                return false;
+            }
+        });
     </script>
     <script>
-    $(function() {
-        $('.select2').select2();
-    });
+        $(function() {
+            $('.select2').select2();
+        });
     </script>
 </body>
 
