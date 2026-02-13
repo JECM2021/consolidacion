@@ -27,7 +27,7 @@ include_once '../../Operaciones.php';
         <div class="content-wrapper">
             <section class="content-header">
                 <h1>
-                    <i class="fa fa-reply-all"></i> Registro Pastores
+                    <i class="fa fa-reply-all"></i> Registro Pastores / Obreros
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="../../principal"><i class="fa fa-dashboard"></i> Principal</a></li>
@@ -45,6 +45,10 @@ include_once '../../Operaciones.php';
                         <li role="presentation">
                             <a href="#pastoresPrincipales" aria-controls="pastoresPrincipales" role="tab"
                                 data-toggle="tab">Pastores Principales</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#pastoresObreros" aria-controls="pastoresObreros" role="tab"
+                                data-toggle="tab">Obreros</a>
                         </li>
                     </ul>
 
@@ -339,11 +343,146 @@ include_once '../../Operaciones.php';
                                         aria-hidden="true"></i> Cancelar</button>
                             </div>
                         </div>
+                        <!--INICIO TAP PANEL 3 OBREROS-->
+                        <div role="tabpanel" class="tab-pane" id="pastoresObreros">
+                            <div class="row">
+                                <br>
+                                <div class="col-md-2">
+                                    <label><strong>Pastor Principal:</strong></label>
+                                    <select class="form-control input-sm " id="cmbPastorPrincipal"
+                                        name="cmbPastorPrincipal"> </select>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <br>
+                                <div class="col-md-2">
+                                    <label><strong>Tipo de Documento:</strong></label>
+                                    <select class="form-control input-sm " id="cmbTipoDocumentoOb"
+                                        name="cmbTipoDocumentoOb"> </select>
+                                    <input type="hidden" id="txtEditarOb" name="txtEditarOb" value="0" />
+                                    <input type="hidden" id="txtIdOb" name="txtIdOb" />
+                                    <input type="hidden" id="txtTerOb_id" name="txtTerOb_id" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Documento:</strong></label>
+                                    <input type="text" name="txtDocumentoOb" id="txtDocumentoOb"
+                                        class="form-control  input-sm solo-numero">
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Primer nombre: </strong></label>
+                                    <input type="text" name="txtPrimerNombreOb"
+                                        onkeyup="this.value = this.value.toUpperCase();" id="txtPrimerNombreOb"
+                                        class="form-control  input-sm">
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Segundo nombre: </strong></label>
+                                    <input type="text" name="txtSegundoNombreOb"
+                                        onkeyup="this.value = this.value.toUpperCase();" id="txtSegundoNombreOb"
+                                        class="form-control  input-sm">
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Primer apellido: </strong></label>
+                                    <input type="text" name="txtPrimerApellidoOb"
+                                        onkeyup="this.value = this.value.toUpperCase();" id="txtPrimerApellidoOb"
+                                        class="form-control  input-sm">
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Segundo apellido: </strong></label>
+                                    <input type="text" name="txtSegundoApellidoOb"
+                                        onkeyup="this.value = this.value.toUpperCase();" id="txtSegundoApellidoOb"
+                                        class="form-control  input-sm">
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label><strong>Departamento:</strong></label>
+                                    <select class="form-control input-sm select2" style="width: 100%;"
+                                        id="cmbDepartamentoOb" name="cmbDepartamentoOb"
+                                        onchange="listarComboCiudad(this, 'cmbCiudadPp')"> </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Ciudad:</strong></label>
+                                    <select class="form-control input-sm select2" style="width: 100%;" id="cmbCiudadOb"
+                                        name="cmbCiudadOb" onchange="listarComboBarrio(this, 'cmbBarrioOb')"> </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Barrio:</strong></label>
+                                    <select class="form-control input-sm select2" id="cmbBarrioOb" style="width: 100%;"
+                                        name="cmbBarrioOb"> </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Direccion:</strong></label>
+                                    <input type="text" name="txtDireccionOb"
+                                        onkeyup="this.value = this.value.toUpperCase();" id="txtDireccionOb"
+                                        class="form-control  input-sm">
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Telefono:</strong></label>
+                                    <input type="text" name="txtTelefonoOb"
+                                        onkeyup="this.value = this.value.toUpperCase();" id="txtTelefonoOb"
+                                        class="form-control input-sm solo-numero">
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Celular:</strong></label>
+                                    <input type="text" name="txtCelularOb"
+                                        onkeyup="this.value = this.value.toUpperCase();" id="txtCelularOb"
+                                        class="form-control input-sm solo-numero">
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label><strong>Sexo:</strong></label>
+                                    <select class="form-control input-sm " id="cmbSexoOb" name="cmbSexoOb"> </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Edad:</strong></label>
+                                    <input type="text" name="txtEdadOb" onkeyup="this.value = this.value.toUpperCase();"
+                                        id="txtEdadOb" class="form-control input-sm solo-numero">
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Estado Civil:</strong></label>
+                                    <select class="form-control input-sm " id="cmbEstadoCivilOb"
+                                        name="cmbEstadoCivilOb"> </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label><strong>Estado:</strong></label>
+                                    <select class="form-control input-sm " id="cmbEstadoOb" name="cmbEstadoOb">
+                                        <option value="A" selected>ACTIVO</option>
+                                        <option value="I">INACTIVO</option>
+                                    </select>
+                                </div>
+                            </div><br><br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label><strong>Filtro rapido:</strong></label>
+                                    <input type="text" name="txtFiltroPp"
+                                        onkeyup="this.value = this.value.toUpperCase();" id="txtFiltroUsuariosPp"
+                                        onclick="filtrarDatos('txtFiltroUsuariosPp', 'tblFiltrarUsuarioPp')"
+                                        class="form-control  input-sm">
+                                </div>
+                            </div><br><br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="divVisualizarObreros"
+                                        style="overflow: auto; width: 100%; height: 320px">
+                                        <table id='tbl_visualizar_Obreros' style=' font-size: 11px;'
+                                            class='table-hover table-condensed table-striped table-bordered  table  callback1'>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" name="btnGuardarObreros" id="btnGuardarObreros"
+                                    class="btn btn-primary btn-sm"><i class="fa fa-floppy-o" aria-hidden="true"></i>
+                                    Guardar</button>
+                                <button type="reset" name="btnCancelarObrero" id="btnCancelarObreros"
+                                    data-dismiss="modal" class="btn btn-warning btn-sm"><i class="fa fa-sign-out"
+                                        aria-hidden="true"></i> Cancelar</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
-
-
             <div class="modal fade " id="modalLoandig" role="dialog" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">

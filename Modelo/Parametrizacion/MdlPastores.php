@@ -391,6 +391,7 @@ class mdlPastores extends conexion
             while ($row = $result->fetch_assoc()) {
                 $rawdata[] = array(
                     "ID_PP" => $row['ID_PP'],
+                    "TER_PP" => $row['TER_PP'],
                     "ID_PG" => $row['ID_PG'],
                     "TIPO_DOC" => $row['TIPO_DOC'],
                     "DOCUMENTO" => $row['DOCUMENTO'],
@@ -425,5 +426,28 @@ class mdlPastores extends conexion
             echo $exc->getTraceAsString();
         }
         return $rawdata;
+    }
+
+    function actualizarPastorPrincipal($tipoDocumento, $numDocumento, $primerNombre, $segundoNombre, $primerApellido, $segundoApellido, $departamento, $ciudad, $barrios, $direccion, $telefono, $celular, $sexo, $edad, $estadoCivil, $ministerio, $codigoPastor, $idPg, $ter_id, $estadoPp, $idPp)
+    {
+        try {
+            $conexion = $this->conectarBd(self::CONSOLIDACION);
+            $respuesta = $conexion->prepare($this->getSql("ACTUALIZAR_PASTOR_PRINCIPAL", self::RUTA_SQL));
+            $respuesta->bind_param('ssssssssssssssss', $tipoDocumento, $numDocumento, $primerNombre, $segundoNombre, $primerApellido, $segundoApellido, $departamento, $ciudad, $barrios, $direccion, $telefono, $celular, $sexo, $edad, $estadoCivil, $ter_id);
+            $filasAfectadas = $respuesta->execute() or ($respuesta->error);
+            if ($filasAfectadas > 0) {
+                $respuesta = $conexion->prepare($this->getSql("ACTUALIZAR_PASTORPRINCIPAL_DETALLE", self::RUTA_SQL));
+                $respuesta->bind_param('ssss', $ministerio, $codigoPastor, $estadoPp, $idPg, $idTer, $idPp);
+                $filasAfectadas = $respuesta->execute();
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        try {
+            $this->descconectarBd($conexion);
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $filasAfectadas;
     }
 }

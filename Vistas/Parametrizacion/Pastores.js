@@ -621,7 +621,7 @@ function registrarPastorPrincipal(tipoDocumento, numDocumento, primerNombre, seg
                 var ret = eval('(' + data + ')');
                 if (ret.hasOwnProperty("success")) {
                     alertify.success(ret.success);
-                    /*visualizarPastGeneral();*/
+                    visualizarPastPrincipal();
                     limpiarCamposPp();
 
                 } else if (ret.hasOwnProperty("error")) {
@@ -661,7 +661,7 @@ function limpiarCamposPp() {
     $("#btnGuardarPastorPp").html("Guardar");
 }
 
-var listarPastPriincipal = "";
+var listarPastPrincipal = "";
 function visualizarPastPrincipal() {
     $("#tbl_visualizar_PastPrincipal").html("<label style='float:left; margin-left:48%; margin-top:15%; font-size:15px;'>Cargando...</label><img src=''  style='float:left; margin-top:%; margin-left:49%; width:5%;'>");
     var ur = CONTROLLERPASTORES;
@@ -678,11 +678,11 @@ function visualizarPastPrincipal() {
             var ret = "";
             try {
                 ret = eval('(' + data + ')');
-                listarPastGeneral = ret;
+                listarPastPrincipal = ret;
                 if (ret.hasOwnProperty("error")) {
                     alertify.error(ret.error);
                 } else {
-                    $listaUsuario = $("#tbl_visualizar_PastGeneral");
+                    $listaUsuario = $("#tbl_visualizar_PastPrincipal");
                     $listaUsuario.html('');
                     var thead = $("<thead></thead>");
                     $listaUsuario.append(thead);
@@ -725,5 +725,63 @@ function visualizarPastPrincipal() {
             alertify.alert(error);
         }
     });
+}
+
+function consultarInformacionPastPrincipal(index) {
+    alertify.confirm('Mnesaje', 'Esta seguro de Editar el registro', function () {
+        //debugger;
+        var idPp = listarPastPrincipal[index].ID_PP;
+        var terpp = listarPastPrincipal[index].TER_PP;
+        var idPg = listarPastPrincipal[index].ID_PG;
+        var tipoDoc = listarPastPrincipal[index].TIPO_DOC;
+        var docPp = listarPastPrincipal[index].DOCUMENTO;
+        var priNomPp = listarPastPrincipal[index].PRIMER_NOMBRE;
+        var segNomPp = listarPastPrincipal[index].SEGUNDO_NOMBRE;
+        var priApelPp = listarPastPrincipal[index].PRIMER_APELLIDO;
+        var segApelPp = listarPastPrincipal[index].SEGUNDO_APELLIDO;
+        var dept = listarPastPrincipal[index].DEPT;
+        var ciu = listarPastPrincipal[index].CIU;
+        var barrio = listarPastPrincipal[index].BARRIO;
+        var direccion = listarPastPrincipal[index].DIRECCION;
+        var telefono = listarPastPrincipal[index].TELEFONO;
+        var celular = listarPastPrincipal[index].CELULAR;
+        var sexo = listarPastPrincipal[index].SEXO;
+        var edad = listarPastPrincipal[index].EDAD;
+        var civil = listarPastPrincipal[index].CIVIL;
+        var ministerio = listarPastPrincipal[index].ID_MINISTERIO;
+        var codPastPp = listarPastPrincipal[index].COD_PP;
+        var estado = listarPastPrincipal[index].ID_ESTADO;
+
+        $("#txtIdPp").val(idPp);
+        $("#txtTerPp_id").val(terpp);
+        $("#cmbPastorGeneral").val(idPg);
+        $("#cmbTipoDocumentoPp").val(tipoDoc);
+        $("#txtDocumentoPp").val(docPp);
+        $("#txtDocumentoPp").prop("disabled", true);
+        $("#txtPrimerNombrePp").val(priNomPp);
+        $("#txtSegundoNombrePp").val(segNomPp);
+        $("#txtPrimerApellidoPp").val(priApelPp);
+        $("#txtSegundoApellidoPp").val(segApelPp);
+        $("#cmbDepartamentoPp").val(dept).change();
+        setTimeout(function () {
+            $("#cmbCiudadPp").val(ciu).change();
+        }, 200);
+        setTimeout(function () {
+            $("#cmbBarrioPp").val(barrio).change();
+        }, 200);
+        $("#txtDireccionPp").val(direccion);
+        $("#txtTelefonoPp").val(telefono);
+        $("#txtCelularPp").val(celular);
+        $("#cmbSexoPp").val(sexo);
+        $("#txtEdadPp").val(edad);
+        $("#cmbEstadoCivilPp").val(civil);
+        $("#cmbMinisterioPp").val(ministerio);
+        $("#txtCodigoPp").val(codPastPp);
+        $("#cmbEstadoPp").val(estado);
+
+        $("#txtEditarPp").val(1);
+        $("#btnGuardarPastorPp").html("Actualizar");
+    }, function () { });
 
 }
+// ----------OBREROS----------

@@ -293,7 +293,7 @@ function registrarPastorPrincipal()
 
     try {
         if ($editarPp == 1) {
-            $parametrosPp = $mdlPastores->actualizarPastorPrinciapl($tipoDocumento, $numDocumento, $primerNombre, $segundoNombre, $primerApellido, $segundoApellido, $departamento, $ciudad, $barrios, $direccion, $telefono, $celular, $sexo, $edad, $estadoCivil, $ministerio, $codigoPastor, $idPg, $ter_id, $estadoPp, $idPp);
+            $parametrosPp = $mdlPastores->actualizarPastorPrincipal($tipoDocumento, $numDocumento, $primerNombre, $segundoNombre, $primerApellido, $segundoApellido, $departamento, $ciudad, $barrios, $direccion, $telefono, $celular, $sexo, $edad, $estadoCivil, $ministerio, $codigoPastor, $idPg, $ter_id, $estadoPp, $idPp);
             $msj =  "Pastor general Actualizado correctamente";
         } else {
             $parametrosPp = $mdlPastores->registrarPastorPrincipal($tipoDocumento, $numDocumento, $primerNombre, $segundoNombre, $primerApellido, $segundoApellido, $departamento, $ciudad, $barrios, $direccion, $telefono, $celular, $sexo, $edad, $estadoCivil, $ministerio, $codigoPastor, $idPg, $estadoPp);

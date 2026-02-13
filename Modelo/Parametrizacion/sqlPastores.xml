@@ -205,7 +205,8 @@
     <VISUALIZAR_PASTORES_PRINCIPAL>
         <sql>
             SELECT
-            TER.TER_ID AS ID_PP,
+            PP.PASTORP_ID AS ID_PP,
+            TER.TER_ID AS TER_PP,
             PP.PASTOR_ID AS ID_PG,
             TER.TIP_ID AS TIPO_DOC,
             TER.TER_DOCUMENTO AS DOCUMENTO,
@@ -240,4 +241,35 @@
             INNER JOIN MINISTERIOS MIN ON MIN.MIN_ID = PP.MIN_ID
         </sql>
     </VISUALIZAR_PASTORES_PRINCIPAL>
+    <ACTUALIZAR_PASTOR_PRINCIPAL>
+        <sql>
+            UPDATE TERCEROS SET
+            TIP_ID = ?,
+            TER_DOCUMENTO = ?,
+            TER_PRIMER_NOMBRE = ?,
+            TER_SEGUNDO_NOMBRE = ?,
+            TER_PRIMER_APELLIDO = ?,
+            TER_SEGUNDO_APELLIDO = ?,
+            DEP_ID = ?,
+            CIU_ID = ?,
+            TER_BARRIO = ?,
+            TER_DIRECCION = ?,
+            TER_TELEFONO = ?,
+            TER_CELULAR = ?,
+            SEX_ID = ?,
+            TER_EDAD = ?,
+            ETC_ID = ?
+            WHERE TER_ID = ?
+        </sql>
+    </ACTUALIZAR_PASTOR_PRINCIPAL>
+    <ACTUALIZAR_PASTORPRINCIPAL_DETALLE>
+        <sql>
+            UPDATE PASTORES_PRINCIPALES SET
+            MIN_ID = ?,
+            COD_PASTORP = ?,
+            PASTORP_ESTADO = ?,
+            PASTOR_ID = ?
+            WHERE TER_ID = ? AND PASTORP_ID = ?
+        </sql>
+    </ACTUALIZAR_PASTORPRINCIPAL_DETALLE>
 </root>
