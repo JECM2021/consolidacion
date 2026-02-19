@@ -398,7 +398,7 @@ include_once '../../Operaciones.php';
                                     <label><strong>Departamento:</strong></label>
                                     <select class="form-control input-sm select2" style="width: 100%;"
                                         id="cmbDepartamentoOb" name="cmbDepartamentoOb"
-                                        onchange="listarComboCiudad(this, 'cmbCiudadPp')"> </select>
+                                        onchange="listarComboCiudad(this, 'cmbCiudadOb')"> </select>
                                 </div>
                                 <div class="col-md-2">
                                     <label><strong>Ciudad:</strong></label>

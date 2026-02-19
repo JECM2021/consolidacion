@@ -48,6 +48,15 @@ switch ($op) {
     case 12:
         visualizarPastPrincipal();
         break;
+    case 13:
+        listarPastoresPrincipales();
+        break;
+    case 14:
+        registrarObrero();
+        break;
+    case 15:
+        visualizarObreros();
+        break;
 }
 
 
@@ -316,6 +325,85 @@ function visualizarPastPrincipal()
     $mdlPastores = new mdlPastores();
     try {
         $listaRegistro = $mdlPastores->visualizarPastPrincipal();
+        if ($listaRegistro !== null) {
+            $json = json_encode($listaRegistro);
+            echo $json;
+        }
+    } catch (Exception $exc) {
+        echo $exc->getTraceAsString();
+    }
+}
+
+function listarPastoresPrincipales()
+{
+    $mdlPastores = new mdlPastores();
+    try {
+
+        $listarPastoresPrincipales = $mdlPastores->listarPastoresPrincipales();
+        if ($listarPastoresPrincipales !== null) {
+            $json = json_encode($listarPastoresPrincipales);
+            echo $json;
+        } else {
+            echo "Lita vacia.";  // devolver en un arreglos , es por esta la razon que en el json se presenta error.
+        }
+    } catch (Exception $exc) {
+        echo $exc->getTraceAsString();
+    }
+}
+
+function registrarObrero()
+{
+    $mdlPastores = new mdlPastores();
+    $pastorPrincipal = addslashes(htmlspecialchars($_POST['pastorPrincipal']));
+    $tipoDocumentoOb = addslashes(htmlspecialchars($_POST['tipoDocumentoOb']));
+    $editarOb = addslashes(htmlspecialchars($_POST['editarOb']));
+    $idOb = addslashes(htmlspecialchars($_POST['idOb']));
+    $terIdOb = addslashes(htmlspecialchars($_POST['terIdOb']));
+    $documentoOb = addslashes(htmlspecialchars($_POST['documentoOb']));
+    $primerNombreOb = addslashes(htmlspecialchars($_POST['primerNombreOb']));
+    $segundoNombreOb = addslashes(htmlspecialchars($_POST['segundoNombreOb']));
+    $primerApellidoOb = addslashes(htmlspecialchars($_POST['primerApellidoOb']));
+    $segundoApellidoOb = addslashes(htmlspecialchars($_POST['segundoApellidoOb']));
+    $departamentoOb = addslashes(htmlspecialchars($_POST['departamentoOb']));
+    $ciudadOb = addslashes(htmlspecialchars($_POST['ciudadOb']));
+    $barrioOb = addslashes(htmlspecialchars($_POST['barrioOb']));
+    $direccionOb = addslashes(htmlspecialchars($_POST['direccionOb']));
+    $telefonoOb = addslashes(htmlspecialchars($_POST['telefonoOb']));
+    $celularOb = addslashes(htmlspecialchars($_POST['celularOb']));
+    $sexoOb = addslashes(htmlspecialchars($_POST['sexoOb']));
+    $edadOb = addslashes(htmlspecialchars($_POST['edadOb']));
+    $estadoCivilOb = addslashes(htmlspecialchars($_POST['estadoCivilOb']));
+    $estadoOb = addslashes(htmlspecialchars($_POST['estadoOb']));
+    $statusJson = array();
+    try {
+        if ($editarOb == 1) {
+            $parametrosPp = $mdlPastores->actualizarObrero($pastorPrincipal, $tipoDocumentoOb, $documentoOb, $primerNombreOb, $segundoNombreOb, $primerApellidoOb, $segundoApellidoOb, $departamentoOb, $ciudadOb, $barrioOb, $direccionOb, $telefonoOb, $celularOb, $sexoOb, $edadOb, $estadoCivilOb, $estadoOb, $terIdOb, $idOb);
+            $msj =  "Obrero actualizado correctamente";
+            if ($parametrosPp > 0) {
+                $statusJson["success"] = $msj;
+            } else {
+                $statusJson["error"] = "Error al registrar Ingreso";
+            }
+        } else {
+            $parametrosPp = $mdlPastores->registrarObrero($pastorPrincipal, $tipoDocumentoOb, $documentoOb, $primerNombreOb, $segundoNombreOb, $primerApellidoOb, $segundoApellidoOb, $departamentoOb, $ciudadOb, $barrioOb, $direccionOb, $telefonoOb, $celularOb, $sexoOb, $edadOb, $estadoCivilOb, $estadoOb);
+            $msj =  "Obrero guardando correctamente";
+            if ($parametrosPp > 0) {
+                $statusJson["success"] = $msj;
+            } else {
+                $statusJson["error"] = "Error al registrar Ingreso";
+            }
+        }
+        echo json_encode($statusJson);
+    } catch (Exception $exc) {
+        echo $exc->getTraceAsString();
+    }
+}
+
+function visualizarObreros()
+{
+    $mdlPastores = new mdlPastores();
+    try {
+        $listaRegistro = $mdlPastores->visualizarObreros();
         if ($listaRegistro !== null) {
             $json = json_encode($listaRegistro);
             echo $json;

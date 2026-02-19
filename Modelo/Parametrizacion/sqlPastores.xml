@@ -272,4 +272,117 @@
             WHERE TER_ID = ? AND PASTORP_ID = ?
         </sql>
     </ACTUALIZAR_PASTORPRINCIPAL_DETALLE>
+    <LISTAR_PASTORES_PRINCIPALES>
+        <sql>
+            SELECT
+            PP.PASTORP_ID AS ID,
+            CONCAT(TER.TER_PRIMER_NOMBRE,' ',TER.TER_SEGUNDO_NOMBRE, ' ',TER.TER_PRIMER_APELLIDO, TER.TER_SEGUNDO_APELLIDO) AS DESCRIPCION	
+            FROM
+            PASTORES_PRINCIPALES PP
+            INNER JOIN TERCEROS TER ON TER.TER_ID = PP.TER_ID
+        </sql>
+    </LISTAR_PASTORES_PRINCIPALES>
+    <CONSULTAR_DOCUMENTO>
+        <sql>
+            SELECT
+            ter.ter_documento 
+            FROM
+            terceros ter
+            WHERE ter.ter_documento = ?
+        </sql>
+    </CONSULTAR_DOCUMENTO>
+    <AGREGAR_OBRERO>
+        <sql>
+            INSERT INTO TERCEROS (
+            TIP_ID,
+            TER_DOCUMENTO,
+            TER_PRIMER_NOMBRE,
+            TER_SEGUNDO_NOMBRE,
+            TER_PRIMER_APELLIDO,
+            TER_SEGUNDO_APELLIDO,
+            DEP_ID,
+            CIU_ID,
+            TER_BARRIO,
+            TER_DIRECCION,
+            TER_TELEFONO,
+            TER_CELULAR,
+            SEX_ID,
+            TER_EDAD,
+            ETC_ID 
+            )
+            VALUES
+            (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
+        </sql>
+    </AGREGAR_OBRERO>
+    <AGREGAR_OBERRO_DETALLE>
+        <sql>
+            INSERT INTO OBRERO (TER_ID,PASTORP_ID,OBR_ESTADO)VALUES(?,?,?);
+        </sql>
+    </AGREGAR_OBERRO_DETALLE>
+    <VISUALIZAR_OBREROS>
+        <sql>
+            SELECT
+            OB.PASTORP_ID AS PP_ID,
+            OB.OBR_ID AS OB_ID,
+            OB.TER_ID AS OB_TERID,
+            TER.TIP_ID AS TIPO_DOC,
+            TER.TER_DOCUMENTO AS NUM_DOCUMENTO,
+            TER.TER_PRIMER_NOMBRE AS PRIMER_NOMBRE,
+            TER.TER_SEGUNDO_NOMBRE AS SEGUNDO_NOMBRE,
+            TER.TER_PRIMER_APELLIDO AS PRIMER_APELLIDO,
+            TER.TER_SEGUNDO_APELLIDO AS SEGUNDO_APELLIDO,
+            CONCAT(TER.TER_PRIMER_NOMBRE,' ',TER.TER_SEGUNDO_NOMBRE,' ',TER.TER_PRIMER_APELLIDO,' ',TER.TER_SEGUNDO_APELLIDO) AS NOMBRE_COMPLETO,
+            CONCAT(TERP.TER_PRIMER_NOMBRE,' ',TERP.TER_SEGUNDO_NOMBRE,' ',TERP.TER_PRIMER_APELLIDO,' ',TERP.TER_SEGUNDO_APELLIDO) AS NOMBRE_PASTOR,
+            TER.DEP_ID AS DEPT_ID,
+            TER.CIU_ID AS CIU_ID,
+            TER.TER_BARRIO AS BARRIO_ID,
+            TER.TER_DIRECCION AS DIRECCION,
+            TER.TER_TELEFONO AS TELEFONO,
+            TER.TER_CELULAR AS CELULAR,
+            TER.SEX_ID AS SEXO_ID,
+            TER.TER_EDAD AS EDAD,
+            TER.ETC_ID AS ETC_ID,
+            OB.OBR_ESTADO AS ESTADO_ID,
+            CASE
+            WHEN OB.OBR_ESTADO = 'A' THEN 'ACTIVO'
+            ELSE 'INACTIVO'
+            END AS ESTADO,
+            UPPER(MIN.MIN_DESCRIPCION) AS MINISTERIO	
+            FROM
+            OBRERO OB
+            INNER JOIN TERCEROS TER ON TER.TER_ID = OB.TER_ID
+            INNER JOIN PASTORES_PRINCIPALES PP ON PP.PASTORP_ID = OB.PASTORP_ID
+            INNER JOIN TERCEROS TERP ON TERP.TER_ID = PP.TER_ID
+            INNER JOIN MINISTERIOS MIN ON MIN.MIN_ID = PP.MIN_ID
+        </sql>
+    </VISUALIZAR_OBREROS>
+    <ACTUALIZAR_TEROBRERO>
+        <sql>
+            UPDATE TERCEROS SET
+            TIP_ID = ?,
+            TER_DOCUMENTO = ?,
+            TER_PRIMER_NOMBRE = ?,
+            TER_SEGUNDO_NOMBRE = ?,
+            TER_PRIMER_APELLIDO = ?,
+            TER_SEGUNDO_APELLIDO = ?,
+            DEP_ID = ?,
+            CIU_ID = ?,
+            TER_BARRIO = ?,
+            TER_DIRECCION = ?,
+            TER_TELEFONO = ?,
+            TER_CELULAR = ?,
+            SEX_ID = ?,
+            TER_EDAD = ?,
+            ETC_ID = ?
+            WHERE TER_ID = ?
+        </sql>
+    </ACTUALIZAR_TEROBRERO>
+    <ACTUALIZAR_OBRERO_DETALLE>
+        <sql>
+            UPDATE OBRERO SET
+            PASTORP_ID = ?,
+            OBR_ESTADO = ?
+            WHERE TER_ID = ? AND OBR_ID = ?
+        </sql>
+    </ACTUALIZAR_OBRERO_DETALLE>
 </root>
