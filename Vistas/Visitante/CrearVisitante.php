@@ -7,15 +7,15 @@ include_once '../../Operaciones.php';
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SICS | Crear Barrios</title>
+    <title>SICS | Crear Nuevo Visitante</title>
     <?php
     include '../../webPage/imports/imports.php';
     ?>
     <script>
-        var CONTROLLERBARRIOS = "../../Controlador/Parametrizacion/CtlBarrios.php";
+        var CONTROLLERVISITANTE = "";
     </script>
 
-    <script src="Barrios.js?v=<?php echo (rand()); ?>"></script>
+    <script src="CrearVisitante.js?v=<?php echo (rand()); ?>"></script>
 </head>
 
 <body class="skin-blue sidebar-mini">
@@ -27,12 +27,12 @@ include_once '../../Operaciones.php';
         <div class="content-wrapper">
             <section class="content-header">
                 <h1>
-                    <i class="fa fa-reply-all"></i> Crear Barrios
+                    <i class="fa fa-reply-all"></i> Crear Nuevo Visitante
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="../../principal"><i class="fa fa-dashboard"></i> Principal</a></li>
-                    <li class="">Parametrizacion</li>
-                    <li class="">Crear Barrios</li>
+                    <li class="">Registro Reporte</li>
+                    <li class="">Crear Nuevo Visitante</li>
                 </ol>
             </section>
             <section class="content">
@@ -41,35 +41,21 @@ include_once '../../Operaciones.php';
                         <div class="row">
                             <br>
 
-                            <div class="col-md-3">
-                                <label><strong>Departamento:</strong></label>
-                                <select class="form-control input-sm select2" style="width: 100%;" id="cmbDepartamento"
-                                    name="cmbDepartamento" onchange="listarComboCiudad(this, 'cmbCiudad')"> </select>
+                            <div class="col-md-8">
+                                <label><strong>Nombre del Ministerio</strong></label>
+                                <input type="text" name="txtNombreMinisterio"
+                                    onkeyup="this.value = this.value.toUpperCase();" id="txtNombreMinisterio"
+                                    class="form-control  input-sm">
+                                <input type="hidden" id="txtEditarMin" name="txtEditarMin" value="0" />
+                                <input type="hidden" id="txtIdMin" name="txtIdMin" />
                             </div>
-                            <div class="col-md-3">
-                                <label><strong>Ciudad:</strong></label>
-                                <select class="form-control input-sm select2" style="width: 100%;" id="cmbCiudad"
-                                    name="cmbCiudad"> </select>
+                            <div class="col-md-2">
+                                <label><strong>Estado:</strong></label>
+                                <select class="form-control input-sm " id="cmbEstadoMin" name="cmbEstadoMin">
+                                    <option value="A" selected>ACTIVO</option>
+                                    <option value="I">INACTIVO</option>
+                                </select>
                             </div>
-                            <div class="col-md-4">
-                                <label><strong>Nombre del Barrio:</strong></label>
-                                <input type="text" name="txtBarrio" onkeyup="this.value = this.value.toUpperCase();"
-                                    id="txtBarrio" class="form-control  input-sm">
-                                <input type="hidden" id="txtEditarBarrio" name="txtEditarBarrio" value="0" />
-                                <input type="hidden" id="txtIdBarrio" name="txtIdBarrio" />
-                            </div>
-                            <!--<div class="col-md-1">
-                                <label><br>&nbsp</label>
-                                <button type="button" name="btnGuardarBarrio" id="btnGuardarBarrio"
-                                    class="btn btn-primary btn-sm"><i class="fa fa-floppy-o" aria-hidden="true"></i>
-                                    Guardar</button>
-                            </div>
-                            <div class="col-md-1">
-                                <label><br>&nbsp</label>
-                                <button type="reset" name="btnCancelarBarrio" id="btnCancelarBarrio"
-                                    data-dismiss="modal" class="btn btn-warning btn-sm"><i class="fa fa-sign-out"
-                                        aria-hidden="true"></i> Cancelar</button>
-                            </div>-->
                         </div><br><br>
                         <div class="row">
                             <div class="col-md-12">
@@ -82,18 +68,18 @@ include_once '../../Operaciones.php';
                         </div><br><br>
                         <div class="row">
                             <div class="col-md-12">
-                                <div id="divVisualizarBarrios" style="overflow: auto; width: 100%; height: 320px">
-                                    <table id='tbl_visualizar_Barrios' style=' font-size: 11px;'
+                                <div id="divVisualizarMinisterio" style="overflow: auto; width: 100%; height: 320px">
+                                    <table id='tbl_visualizar_Ministerios' style=' font-size: 11px;'
                                         class='table-hover table-condensed table-striped table-bordered  table  callback1'>
                                     </table>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" name="btnGuardarBarrio" id="btnGuardarBarrio"
+                            <button type="button" name="btnGuardarMinisterios" id="btnGuardarMinisterios"
                                 class="btn btn-primary btn-sm"><i class="fa fa-floppy-o" aria-hidden="true"></i>
                                 Guardar</button>
-                            <button type="reset" name="btnCancelarBarrio" id="btnCancelarBarrio"
+                            <button type="reset" name="btnCancelarMinisterios" id="btnCancelarMinisterios"
                                 data-dismiss="modal" class="btn btn-warning btn-sm"><i class="fa fa-sign-out"
                                     aria-hidden="true"></i> Cancelar</button>
                         </div>
