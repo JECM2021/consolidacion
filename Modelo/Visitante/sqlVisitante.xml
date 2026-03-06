@@ -1,0 +1,77 @@
+<root>
+    <LISTAR_PASTOR_INMEDIATO>
+        <sql>
+            SELECT
+            PP.PASTORP_ID AS ID,
+            CONCAT(PP.COD_PASTORP,' - ',TER.TER_PRIMER_NOMBRE,' ',TER.TER_SEGUNDO_NOMBRE,' ',TER.TER_PRIMER_APELLIDO,' ',TER.TER_SEGUNDO_APELLIDO) AS DESCRIPCION
+            FROM
+            PASTORES_PRINCIPALES PP
+            INNER JOIN TERCEROS TER ON TER.TER_ID = PP.TER_ID
+        </sql>
+    </LISTAR_PASTOR_INMEDIATO>
+    <LISTAR_CREYENTE>
+        <sql>
+            SELECT
+            TER.TER_ID AS ID,
+            CONCAT(TER.TER_DOCUMENTO,' - ',TER.TER_PRIMER_NOMBRE,' ',TER.TER_SEGUNDO_NOMBRE,' ',TER.TER_PRIMER_APELLIDO,' ',TER.TER_SEGUNDO_APELLIDO) AS DESCRIPCION,
+            TER.TER_CELULAR AS CELULAR
+            FROM
+            TERCEROS TER
+            INNER JOIN PASTORES_PRINCIPALES PP ON TER.TER_ID = PP.TER_ID UNION
+            SELECT
+            TER.TER_ID AS ID,
+            CONCAT(TER.TER_DOCUMENTO,' - ',TER.TER_PRIMER_NOMBRE,' ',TER.TER_SEGUNDO_NOMBRE,' ',TER.TER_PRIMER_APELLIDO,' ',TER.TER_SEGUNDO_APELLIDO) AS DESCRIPCION,
+            TER.TER_CELULAR AS CELULAR
+            FROM
+            TERCEROS TER
+            INNER JOIN OBRERO OB ON TER.TER_ID = OB.TER_ID
+        </sql>
+    </LISTAR_CREYENTE>
+    <LISTAR_TELEFONO>
+        <sql>
+            SELECT
+            TER.TER_CELULAR AS NUMEROTELEFONO
+            FROM
+            TERCEROS TER
+            WHERE TER.TER_ID = ?
+        </sql>
+    </LISTAR_TELEFONO>
+     <LISTAR_TIPO_DOCUMENTO>
+        <sql>
+            SELECT
+            TIP_ID AS ID,
+            UPPER(TIP_DESCRIPCION) AS DESCRIPCION
+            FROM
+            TIPO_DOCUMENTO;
+        </sql>
+    </LISTAR_TIPO_DOCUMENTO>
+    <LISTAR_CIUDADES>
+        <sql>
+            SELECT
+            CIU_ID AS ID,
+            UPPER(CIU_DESCRIPCION) AS DESCRIPCION	
+            FROM
+            CIUDAD 
+        </sql>
+    </LISTAR_CIUDADES>
+    <LISTAR_BARRIOS>
+        <sql>
+            SELECT
+            BARRIO_ID AS ID,
+            UPPER(BARRIO_DESCRIPCION) AS DESCRIPCION 
+            FROM
+            BARRIOS 
+            WHERE
+            CIUD_ID =?
+        </sql>
+    </LISTAR_BARRIOS>
+    <LISTAR_ESTADO_CIVIL>
+        <sql>
+            SELECT
+            ETC_ID AS ID,
+            UPPER(ETC_DESCRIPCION) AS DESCRIPCION	
+            FROM
+            ESTADO_CIVIL;
+        </sql>
+    </LISTAR_ESTADO_CIVIL>
+</root>
