@@ -68,7 +68,7 @@ include_once '../../Operaciones.php';
                                 <div class="col-md-2">
                                     <label><strong>Documento:</strong></label>
                                     <input type="text" name="txtDocumentoPg" id="txtDocumentoPg"
-                                        class="form-control  input-sm solo-numero">
+                                        class="form-control  input-sm solo-numeroS">
                                 </div>
                                 <div class="col-md-2">
                                     <label><strong>Primer nombre: </strong></label>

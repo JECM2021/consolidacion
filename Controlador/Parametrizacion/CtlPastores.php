@@ -57,6 +57,15 @@ switch ($op) {
     case 15:
         visualizarObreros();
         break;
+    case 16:
+        buscarPastorGeneral();
+        break;
+    case 17:
+        buscarPastorPrincipal();
+        break;
+    case 18:
+        buscarObreros();
+        break;
 }
 
 
@@ -225,8 +234,13 @@ function registrarPastorGeneral()
             $parametrosPg = $mdlPastores->actualizarPastorGeneral($PastoresVO, $idTer, $estado);
             $msj =  "Pastor general Actualizado correctamente";
         } else {
-            $parametrosPg = $mdlPastores->registrarPastorGeneral($PastoresVO);
-            $msj =  "Pastor General guardando correctamente";
+            if ($idTer == null) {
+                $parametrosPg = $mdlPastores->registrarPastorGeneral($PastoresVO);
+                $msj =  "Pastor General guardando correctamente";
+            } else {
+                $parametrosPg = $mdlPastores->agregarPastorGeneral($idTer, $ministerio, $codigoPastor);
+                $msj =  "Pastor General guardando correctamente";
+            }
         }
 
         if ($parametrosPg > 0) {
@@ -302,11 +316,17 @@ function registrarPastorPrincipal()
 
     try {
         if ($editarPp == 1) {
+
             $parametrosPp = $mdlPastores->actualizarPastorPrincipal($tipoDocumento, $numDocumento, $primerNombre, $segundoNombre, $primerApellido, $segundoApellido, $departamento, $ciudad, $barrios, $direccion, $telefono, $celular, $sexo, $edad, $estadoCivil, $ministerio, $codigoPastor, $idPg, $ter_id, $estadoPp, $idPp);
-            $msj =  "Pastor general Actualizado correctamente";
+            $msj =  "Pastor Principal Actualizado correctamente";
         } else {
-            $parametrosPp = $mdlPastores->registrarPastorPrincipal($tipoDocumento, $numDocumento, $primerNombre, $segundoNombre, $primerApellido, $segundoApellido, $departamento, $ciudad, $barrios, $direccion, $telefono, $celular, $sexo, $edad, $estadoCivil, $ministerio, $codigoPastor, $idPg, $estadoPp);
-            $msj =  "Pastor General guardando correctamente";
+            if ($ter_id == null) {
+                $parametrosPp = $mdlPastores->registrarPastorPrincipal($tipoDocumento, $numDocumento, $primerNombre, $segundoNombre, $primerApellido, $segundoApellido, $departamento, $ciudad, $barrios, $direccion, $telefono, $celular, $sexo, $edad, $estadoCivil, $ministerio, $codigoPastor, $idPg, $estadoPp);
+                $msj =  "Pastor Principal guardando correctamente";
+            } else {
+                $parametrosPp = $mdlPastores->agregarPastorGeneral($ter_id, $ministerio, $codigoPastor, $idPg, $estadoPp);
+                $msj =  "Pastor Principal guardando correctamente";
+            }
         }
 
         if ($parametrosPp > 0) {
@@ -377,20 +397,30 @@ function registrarObrero()
     $statusJson = array();
     try {
         if ($editarOb == 1) {
-            $parametrosPp = $mdlPastores->actualizarObrero($pastorPrincipal, $tipoDocumentoOb, $documentoOb, $primerNombreOb, $segundoNombreOb, $primerApellidoOb, $segundoApellidoOb, $departamentoOb, $ciudadOb, $barrioOb, $direccionOb, $telefonoOb, $celularOb, $sexoOb, $edadOb, $estadoCivilOb, $estadoOb, $terIdOb, $idOb);
+            $parametrosOb = $mdlPastores->actualizarObrero($pastorPrincipal, $tipoDocumentoOb, $documentoOb, $primerNombreOb, $segundoNombreOb, $primerApellidoOb, $segundoApellidoOb, $departamentoOb, $ciudadOb, $barrioOb, $direccionOb, $telefonoOb, $celularOb, $sexoOb, $edadOb, $estadoCivilOb, $estadoOb, $terIdOb, $idOb);
             $msj =  "Obrero actualizado correctamente";
-            if ($parametrosPp > 0) {
+            if ($parametrosOb > 0) {
                 $statusJson["success"] = $msj;
             } else {
                 $statusJson["error"] = "Error al registrar Ingreso";
             }
         } else {
-            $parametrosPp = $mdlPastores->registrarObrero($pastorPrincipal, $tipoDocumentoOb, $documentoOb, $primerNombreOb, $segundoNombreOb, $primerApellidoOb, $segundoApellidoOb, $departamentoOb, $ciudadOb, $barrioOb, $direccionOb, $telefonoOb, $celularOb, $sexoOb, $edadOb, $estadoCivilOb, $estadoOb);
-            $msj =  "Obrero guardando correctamente";
-            if ($parametrosPp > 0) {
-                $statusJson["success"] = $msj;
+            if ($terIdOb == null) {
+                $parametrosOb = $mdlPastores->registrarObrero($pastorPrincipal, $tipoDocumentoOb, $documentoOb, $primerNombreOb, $segundoNombreOb, $primerApellidoOb, $segundoApellidoOb, $departamentoOb, $ciudadOb, $barrioOb, $direccionOb, $telefonoOb, $celularOb, $sexoOb, $edadOb, $estadoCivilOb, $estadoOb);
+                $msj =  "Obrero guardando correctamente";
+                if ($parametrosOb > 0) {
+                    $statusJson["success"] = $msj;
+                } else {
+                    $statusJson["error"] = "Error al registrar Ingreso";
+                }
             } else {
-                $statusJson["error"] = "Error al registrar Ingreso";
+                $parametrosOb = $mdlPastores->agregarObrero($terIdOb, $pastorPrincipal, $estadoOb);
+                $msj =  "Obrero guardando correctamente";
+                if ($parametrosOb > 0) {
+                    $statusJson["success"] = $msj;
+                } else {
+                    $statusJson["error"] = "Error al registrar Ingreso";
+                }
             }
         }
         echo json_encode($statusJson);
@@ -407,6 +437,48 @@ function visualizarObreros()
         if ($listaRegistro !== null) {
             $json = json_encode($listaRegistro);
             echo $json;
+        }
+    } catch (Exception $exc) {
+        echo $exc->getTraceAsString();
+    }
+}
+
+function buscarPastorGeneral()
+{
+    $documento = addslashes(htmlspecialchars($_POST["documento"]));
+    $mdlPastores = new mdlPastores();
+    try {
+        $datosPg = $mdlPastores->buscarPastorGeneral($documento);
+        if ($datosPg != null) {
+            echo json_encode($datosPg);
+        }
+    } catch (Exception $exc) {
+        echo $exc->getTraceAsString();
+    }
+}
+
+function buscarPastorPrincipal()
+{
+    $documento = addslashes(htmlspecialchars($_POST["documento"]));
+    $mdlPastores = new mdlPastores();
+    try {
+        $datosPp = $mdlPastores->buscarPastorPrincipal($documento);
+        if ($datosPp != null) {
+            echo json_encode($datosPp);
+        }
+    } catch (Exception $exc) {
+        echo $exc->getTraceAsString();
+    }
+}
+
+function buscarObreros()
+{
+    $documento = addslashes(htmlspecialchars($_POST["documento"]));
+    $mdlPastores = new mdlPastores();
+    try {
+        $datosOb = $mdlPastores->buscarObreros($documento);
+        if ($datosOb != null) {
+            echo json_encode($datosOb);
         }
     } catch (Exception $exc) {
         echo $exc->getTraceAsString();

@@ -41,7 +41,7 @@ include_once '../../Operaciones.php';
                         <label><strong>Referencia:</strong></label>
                         <select class="form-control input-sm " id="cmbReferencia" name="cmbReferencia">
                             <option value="1">Visitante Invitado</option>
-                            <option value="2">Visitante Solo</option>
+                            <option value="2">Visitante No Invitado</option>
                         </select>
                     </div>
                 </div>
@@ -116,6 +116,12 @@ include_once '../../Operaciones.php';
                     </div><br>
                     <div class="row">
                         <div class="col-md-2">
+                            <label><strong>Departamento:</strong></label>
+                            <select class="form-control input-sm select2" style="width: 100%;"
+                                id="cmbDepartamentoVi" name="cmbDepartamentoVi"
+                                onchange="listarComboCiudad(this, 'cmbCiudadVi')"> </select>
+                        </div>
+                        <div class="col-md-2">
                             <label><strong>Ciudad:</strong></label>
                             <select class="form-control input-sm select2" id="cmbCiudadVi" style="width: 100%;"
                                 name="cmbCiudadVi" onchange="listarComboBarrio(this, 'cmbBarrioVi')"> </select>
@@ -138,9 +144,18 @@ include_once '../../Operaciones.php';
                                 class="form-control  input-sm">
                         </div>
                         <div class="col-md-2">
+                            <label><strong>Sexo:</strong></label>
+                            <select class="form-control input-sm select2" id="cmbSexoVi" style="width: 100%;"
+                                name="cmbSexoVi"> </select>
+                        </div>
+
+
+                    </div><br>
+                    <div class="row">
+                        <div class="col-md-2">
                             <label><strong>Celular:</strong></label>
-                            <input type="text" name="txtTelefonoVi"
-                                onkeyup="this.value = this.value.toUpperCase();" id="txtTelefonoVi"
+                            <input type="text" name="txtCelularVi"
+                                onkeyup="this.value = this.value.toUpperCase();" id="txtCelularVi"
                                 class="form-control  input-sm">
                         </div>
                         <div class="col-md-2">
@@ -194,9 +209,9 @@ include_once '../../Operaciones.php';
                         </div>
                         <div class="col-md-6">
                             <label><strong>Nombre del Consejero:</strong></label>
-                            <select class="form-control input-sm select2" style="width: 100%;" id="cmbNombConsVs" name="cmbNombConsVs"></select>
+                            <select class="form-control input-sm select2" style="width: 100%;" id="cmbNombConsVs" name="cmbNombConsVs" onchange="listartelefono(this, 'txtTelefonoVs')"></select>
                         </div>
-                        <div class="col-md-2">
+                        <div class=" col-md-2">
                             <label><strong>Telefono:</strong></label>
                             <input type="text" name="txtTelefonoVs"
                                 onkeyup="this.value = this.value.toUpperCase();" id="txtTelefonoVs"
@@ -249,6 +264,12 @@ include_once '../../Operaciones.php';
                     </div><br>
                     <div class="row">
                         <div class="col-md-2">
+                            <label><strong>Departamento:</strong></label>
+                            <select class="form-control input-sm select2" style="width: 100%;"
+                                id="cmbDepartamentoVs" name="cmbDepartamentoVs"
+                                onchange="listarComboCiudad(this, 'cmbCiudadVs')"> </select>
+                        </div>
+                        <div class="col-md-2">
                             <label><strong>Ciudad:</strong></label>
                             <select class="form-control input-sm select2" id="cmbCiudadVs" style="width: 100%;"
                                 name="cmbCiudadVs" onchange="listarComboBarrio(this, 'cmbBarrioVs')"> </select>
@@ -264,13 +285,13 @@ include_once '../../Operaciones.php';
                                 onkeyup="this.value = this.value.toUpperCase();" id="txtDireccionVs"
                                 class="form-control  input-sm">
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <label><strong>Edad:</strong></label>
                             <input type="text" name="txtEdadVs"
                                 onkeyup="this.value = this.value.toUpperCase();" id="txtEdadVs"
                                 class="form-control  input-sm">
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <label><strong>Celular:</strong></label>
                             <input type="text" name="txtTelefonoVs"
                                 onkeyup="this.value = this.value.toUpperCase();" id="txtTelefonoVs"

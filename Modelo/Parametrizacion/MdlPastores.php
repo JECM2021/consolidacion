@@ -217,7 +217,6 @@ class mdlPastores extends conexion
                 if ($filasAfectadas > 0) {
                     $respuesta = $conexion->prepare($this->getSql("AGREGAR_PASTORGENERAL_DETALLE", self::RUTA_SQL));
                     $respuesta->bind_param('sss', $idter, $ministerio, $codigoPastor);
-
                     $filasAfectadas = $respuesta->execute();
                 }
             } else {
@@ -581,6 +580,186 @@ class mdlPastores extends conexion
                 $respuesta->bind_param('ssss', $pastorPrincipal, $estadoOb, $terIdOb, $idOb);
                 $filasAfectadas = $respuesta->execute();
             }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        try {
+            $this->descconectarBd($conexion);
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $filasAfectadas;
+    }
+
+    function buscarPastorGeneral($documento)
+    {
+        $rawdata = array();
+        try {
+            $conexion = $this->conectarBd(self::CONSOLIDACION);
+            $respuesta = $conexion->prepare($this->getSql("BUSCAR_PASTOR_GERNERAL", self::RUTA_SQL));
+            $respuesta->bind_param('s', $documento);
+            $respuesta->execute();
+            $result = $respuesta->get_result();
+            while ($row = $result->fetch_assoc()) {
+                $rawdata[] = array(
+                    "TER_ID" => $row['TER_ID'],
+                    "DOCUMENTO" => $row['DOCUMENTO'],
+                    "PRIMER_NOMBRE" => $row['PRIMER_NOMBRE'],
+                    "SEGUNDO_NOMBRE" => $row['SEGUNDO_NOMBRE'],
+                    "PRIMER_APELLIDO" => $row['PRIMER_APELLIDO'],
+                    "SEGUNDO_APELLIDO" => $row['SEGUNDO_APELLIDO'],
+                    "TIPO_DOCUMENTO" => $row['TIPO_DOCUMENTO'],
+                    "DEPARTAMENTO" => $row['DEPARTAMENTO'],
+                    "CIUDAD" => $row['CIUDAD'],
+                    "BARRIO" => $row['BARRIO'],
+                    "DIRECCION" => $row['DIRECCION'],
+                    "TELEFONO" => $row['TELEFONO'],
+                    "SEXO" => $row['SEXO'],
+                    "CELULAR" => $row['CELULAR'],
+                    "ESTADO" => $row['ESTADO'],
+                    "EDAD" => $row['EDAD'],
+                    "ESTADO_CIVIL" => $row['ESTADO_CIVIL'],
+                    "PG_ID" => $row['PG_ID']
+                );
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        try {
+            $this->descconectarBd($conexion);
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $rawdata;
+    }
+
+    function agregarPastorGeneral($idter, $ministerio, $codigoPastor)
+    {
+        try {
+            $conexion = $this->conectarBd(self::CONSOLIDACION);
+            $respuesta = $conexion->prepare($this->getSql("AGREGAR_PASTORGENERAL_DETALLE", self::RUTA_SQL));
+            $respuesta->bind_param('sss', $idter, $ministerio, $codigoPastor);
+            $filasAfectadas = $respuesta->execute() or ($respuesta->error);
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        try {
+            $this->descconectarBd($conexion);
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $filasAfectadas;
+    }
+
+    function buscarPastorPrincipal($documento)
+    {
+        $rawdata = array();
+        try {
+            $conexion = $this->conectarBd(self::CONSOLIDACION);
+            $respuesta = $conexion->prepare($this->getSql("BUSCAR_PASTOR_PRINCIPAL", self::RUTA_SQL));
+            $respuesta->bind_param('s', $documento);
+            $respuesta->execute();
+            $result = $respuesta->get_result();
+            while ($row = $result->fetch_assoc()) {
+                $rawdata[] = array(
+                    "TER_ID" => $row['TER_ID'],
+                    "DOCUMENTO" => $row['DOCUMENTO'],
+                    "PRIMER_NOMBRE" => $row['PRIMER_NOMBRE'],
+                    "SEGUNDO_NOMBRE" => $row['SEGUNDO_NOMBRE'],
+                    "PRIMER_APELLIDO" => $row['PRIMER_APELLIDO'],
+                    "SEGUNDO_APELLIDO" => $row['SEGUNDO_APELLIDO'],
+                    "TIPO_DOCUMENTO" => $row['TIPO_DOCUMENTO'],
+                    "DEPARTAMENTO" => $row['DEPARTAMENTO'],
+                    "CIUDAD" => $row['CIUDAD'],
+                    "BARRIO" => $row['BARRIO'],
+                    "DIRECCION" => $row['DIRECCION'],
+                    "TELEFONO" => $row['TELEFONO'],
+                    "SEXO" => $row['SEXO'],
+                    "CELULAR" => $row['CELULAR'],
+                    "ESTADO" => $row['ESTADO'],
+                    "EDAD" => $row['EDAD'],
+                    "ESTADO_CIVIL" => $row['ESTADO_CIVIL'],
+                    "PP_ID" => $row['PP_ID']
+                );
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        try {
+            $this->descconectarBd($conexion);
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $rawdata;
+    }
+
+    function agregarPastorPrincipal($ter_id, $ministerio, $codigoPastor, $idPg, $estadoPp)
+    {
+        try {
+            $conexion = $this->conectarBd(self::CONSOLIDACION);
+            $respuesta = $conexion->prepare($this->getSql("AGREGAR_PASTORPRINCIPAL_DETALLE", self::RUTA_SQL));
+            $respuesta->bind_param('sssss', $ter_id, $ministerio, $codigoPastor, $idPg, $estadoPp);
+            $filasAfectadas = $respuesta->execute() or ($respuesta->error);
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        try {
+            $this->descconectarBd($conexion);
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $filasAfectadas;
+    }
+
+    function buscarObreros($documento)
+    {
+        $rawdata = array();
+        try {
+            $conexion = $this->conectarBd(self::CONSOLIDACION);
+            $respuesta = $conexion->prepare($this->getSql("BUSCAR_OBRERO", self::RUTA_SQL));
+            $respuesta->bind_param('s', $documento);
+            $respuesta->execute();
+            $result = $respuesta->get_result();
+            while ($row = $result->fetch_assoc()) {
+                $rawdata[] = array(
+                    "TER_ID" => $row['TER_ID'],
+                    "DOCUMENTO" => $row['DOCUMENTO'],
+                    "PRIMER_NOMBRE" => $row['PRIMER_NOMBRE'],
+                    "SEGUNDO_NOMBRE" => $row['SEGUNDO_NOMBRE'],
+                    "PRIMER_APELLIDO" => $row['PRIMER_APELLIDO'],
+                    "SEGUNDO_APELLIDO" => $row['SEGUNDO_APELLIDO'],
+                    "TIPO_DOCUMENTO" => $row['TIPO_DOCUMENTO'],
+                    "DEPARTAMENTO" => $row['DEPARTAMENTO'],
+                    "CIUDAD" => $row['CIUDAD'],
+                    "BARRIO" => $row['BARRIO'],
+                    "DIRECCION" => $row['DIRECCION'],
+                    "TELEFONO" => $row['TELEFONO'],
+                    "SEXO" => $row['SEXO'],
+                    "CELULAR" => $row['CELULAR'],
+                    "ESTADO" => $row['ESTADO'],
+                    "EDAD" => $row['EDAD'],
+                    "ESTADO_CIVIL" => $row['ESTADO_CIVIL'],
+                    "OB_ID" => $row['OB_ID']
+                );
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        try {
+            $this->descconectarBd($conexion);
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $rawdata;
+    }
+
+    function agregarObrero($terIdOb, $pastorPrincipal, $estadoOb)
+    {
+        try {
+            $conexion = $this->conectarBd(self::CONSOLIDACION);
+            $respuesta = $conexion->prepare($this->getSql("AGREGAR_OBERRO_DETALLE", self::RUTA_SQL));
+            $respuesta->bind_param('sss', $terIdOb, $pastorPrincipal, $estadoOb);
+            $filasAfectadas = $respuesta->execute() or ($respuesta->error);
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
         }

@@ -36,6 +36,10 @@ $(document).ready(function () {
         validarCamposPastorPrincipal();
     });
 
+    $("#btnCancelarPastorPp").click(function () {
+        limpiarCamposPp();
+    });
+
     visualizarPastPrincipal();
 
     listarPastoresPrincipales('cmbPastorPrincipal');
@@ -45,10 +49,49 @@ $(document).ready(function () {
     });
     visualizarObreros();
 
-    $("#btnCancelarObrero").click(function () {
+    $("#btnCancelarObreros").click(function () {
         limpiarCamposObrero();
     });
 
+
+    $("#txtDocumentoPg").keydown(function (event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode === 13) {
+            if ($("#txtDocumentoPg").val().length !== 0) {
+                refrescaValores = 0;
+                buscarPastorGeneral();
+                //$('#btnGuardar').attr("disabled", true);
+            } else {
+                alertify.alert("Mensaje", "El documento no puede quedar vacio");
+            }
+        }
+    });
+
+    $("#txtDocumentoPp").keydown(function (event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode === 13) {
+            if ($("#txtDocumentoPp").val().length !== 0) {
+                //refrescaValores = 0;
+                buscarPastorPrincipal();
+                //$('#btnGuardar').attr("disabled", true);
+            } else {
+                alertify.alert("Mensaje", "El documento no puede quedar vacio");
+            }
+        }
+    });
+
+    $("#txtDocumentoOb").keydown(function (event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode === 13) {
+            if ($("#txtDocumentoOb").val().length !== 0) {
+                //refrescaValores = 0;
+                buscarObreros();
+                //$('#btnGuardar').attr("disabled", true);
+            } else {
+                alertify.alert("Mensaje", "El documento no puede quedar vacio");
+            }
+        }
+    });
 });
 
 function listarTipoDocumento(idCombo) {
@@ -509,6 +552,8 @@ function limpiarCampos() {
     $("#cmbMinisterioPg").val('');
     $("#txtCodigopg").val('');
     $("#cmbEstado").val('');
+    $("#txtDocumentoPg").prop('disabled', false);
+    $("#btnGuardarPastorPg").html("Guardar");
 }
 //--VISTA PASTORES PRINCIPALES
 
@@ -673,6 +718,7 @@ function limpiarCamposPp() {
     $("#cmbMinisterioPp").val('');
     $("#txtCodigoPp").val('');
     $("#cmbEstadoPp").val('A');
+    $("#txtDocumentoPp").prop('disabled', false);
     $("#btnGuardarPastorPp").html("Guardar");
 }
 
@@ -959,6 +1005,8 @@ function limpiarCamposObrero() {
     $("#txtEdadOb").val('');
     $("#cmbEstadoCivilOb").val('');
     $("#cmbEstadoOb").val('A');
+    $("#txtDocumentoOb").prop('disabled', false);
+    $("#btnGuardarPastorOb").html("Guardar");
 }
 
 var listarObreros = "";
@@ -1073,4 +1121,130 @@ function consultarInformacionObreros(index) {
         $("#btnGuardarObreros").html("Actualizar");
     }, function () { });
 
+}
+
+function buscarPastorGeneral() {
+    var ur = CONTROLLERPASTORES;
+    var op = 16;
+    $.ajax({
+        type: "POST",
+        url: ur,
+        data: ({
+            op: op,
+            documento: $.trim($("#txtDocumentoPg").val())
+        }),
+        success: function (data) {
+            try {
+                var ret = eval('(' + data + ')');
+                $("#txtTerPg_id").val(ret[0].TER_ID);
+                $("#txtIdPg").val(ret[0].PG_ID);
+                $("#cmbTipoDocumentoPg").val(ret[0].TIPO_DOCUMENTO);
+                $("#txtPrimerNombrePg").val(ret[0].PRIMER_NOMBRE);
+                $("#txtSegundoNombrePg").val(ret[0].SEGUNDO_NOMBRE);
+                $("#txtPrimerApellidoPg").val(ret[0].PRIMER_APELLIDO);
+                $("#txtSegundoApellidoPg").val(ret[0].SEGUNDO_APELLIDO);
+                $("#cmbDepartamentoPg").val(ret[0].DEPARTAMENTO).change();
+                setTimeout(function () {
+                    $("#cmbCiudadPg").val(ret[0].CIUDAD).change();
+                }, 200);
+                setTimeout(function () {
+                    $("#cmbBarrioPg").val(ret[0].BARRIO).change();
+                }, 200);
+                $("#txtDireccionpg").val(ret[0].DIRECCION);
+                $("#txtTelefonopg").val(ret[0].TELEFONO);
+                $("#txtCelularpg").val(ret[0].CELULAR);
+                $("#cmbSexoPg").val(ret[0].SEXO);
+                $("#txtEdadpg").val(ret[0].EDAD);
+                $("#cmbEstadoCivilPg").val(ret[0].ESTADO_CIVIL);
+                $("#txtDocumentoPg").prop('disabled', true);
+            } catch (e) { }
+        },
+        error: function (objeto, error, error2) {
+            alertify.alert(error);
+        }
+    });
+}
+
+function buscarPastorPrincipal() {
+    var ur = CONTROLLERPASTORES;
+    var op = 17;
+    $.ajax({
+        type: "POST",
+        url: ur,
+        data: ({
+            op: op,
+            documento: $.trim($("#txtDocumentoPp").val())
+        }),
+        success: function (data) {
+            try {
+                var ret = eval('(' + data + ')');
+                $("#txtTerPp_id").val(ret[0].TER_ID);
+                $("#txtIdPp").val(ret[0].PP_ID);
+                $("#cmbTipoDocumentoPp").val(ret[0].TIPO_DOCUMENTO);
+                $("#txtPrimerNombrePp").val(ret[0].PRIMER_NOMBRE);
+                $("#txtSegundoNombrePp").val(ret[0].SEGUNDO_NOMBRE);
+                $("#txtPrimerApellidoPp").val(ret[0].PRIMER_APELLIDO);
+                $("#txtSegundoApellidoPp").val(ret[0].SEGUNDO_APELLIDO);
+                $("#cmbDepartamentoPp").val(ret[0].DEPARTAMENTO).change();
+                setTimeout(function () {
+                    $("#cmbCiudadPp").val(ret[0].CIUDAD).change();
+                }, 200);
+                setTimeout(function () {
+                    $("#cmbBarrioPp").val(ret[0].BARRIO).change();
+                }, 200);
+                $("#txtDireccionPp").val(ret[0].DIRECCION);
+                $("#txtTelefonoPp").val(ret[0].TELEFONO);
+                $("#txtCelularPp").val(ret[0].CELULAR);
+                $("#cmbSexoPp").val(ret[0].SEXO);
+                $("#txtEdadPp").val(ret[0].EDAD);
+                $("#cmbEstadoCivilPp").val(ret[0].ESTADO_CIVIL);
+                $("#txtDocumentoPp").prop('disabled', true);
+            } catch (e) { }
+        },
+        error: function (objeto, error, error2) {
+            alertify.alert(error);
+        }
+    });
+}
+
+function buscarObreros() {
+    var ur = CONTROLLERPASTORES;
+    var op = 18;
+    $.ajax({
+        type: "POST",
+        url: ur,
+        data: ({
+            op: op,
+            documento: $.trim($("#txtDocumentoOb").val())
+        }),
+        success: function (data) {
+            try {
+                var ret = eval('(' + data + ')');
+                $("#txtTerOb_id").val(ret[0].TER_ID);
+                $("#txtIdOb").val(ret[0].OB_ID);
+                $("#cmbTipoDocumentoOb").val(ret[0].TIPO_DOCUMENTO);
+                $("#txtPrimerNombreOb").val(ret[0].PRIMER_NOMBRE);
+                $("#txtSegundoNombreOb").val(ret[0].SEGUNDO_NOMBRE);
+                $("#txtPrimerApellidoOb").val(ret[0].PRIMER_APELLIDO);
+                $("#txtSegundoApellidoOb").val(ret[0].SEGUNDO_APELLIDO);
+                $("#cmbDepartamentoOb").val(ret[0].DEPARTAMENTO).change();
+                setTimeout(function () {
+                    $("#cmbCiudadOb").val(ret[0].CIUDAD).change();
+                }, 200);
+                setTimeout(function () {
+                    $("#cmbBarrioOb").val(ret[0].BARRIO).change();
+                }, 200);
+                $("#txtDireccionOb").val(ret[0].DIRECCION);
+                $("#txtTelefonoOb").val(ret[0].TELEFONO);
+                $("#txtCelularOb").val(ret[0].CELULAR);
+                $("#cmbSexoOb").val(ret[0].SEXO);
+                $("#txtEdadOb").val(ret[0].EDAD);
+                $("#cmbEstadoCivilOb").val(ret[0].ESTADO_CIVIL);
+                $("#txtDocumentoOb").prop('disabled', true);
+            } catch (e) { }
+        },
+        error: function (objeto, error, error2) {
+            alertify.alert(error);
+        }
+    });
 }
