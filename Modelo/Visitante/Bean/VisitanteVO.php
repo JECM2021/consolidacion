@@ -22,6 +22,11 @@ class VisitanteVO
     public $estadoCivil;
     public $idVisInv;
     public $terInvVis;
+    public $terAsignado;
+    public $hLlamdaVni;
+    public $hLlamadaAsig;
+    public $peticion;
+    
 
     function setReferencia($referencia)
     {
@@ -126,6 +131,26 @@ class VisitanteVO
     function setTerInvVis($terInvVis)
     {
         $this->terInvVis = $terInvVis;
+    }
+
+    function setTerAsignado($terAsignado)
+    {
+        $this->terAsignado = $terAsignado;
+    }
+
+    function setHllamdaVni($hLlamdaVni)
+    {
+        $this->hLlamdaVni = $hLlamdaVni;
+    }
+
+    function setHllamadaAsig($hLlamadaAsig)
+    {
+        $this->hLlamadaAsig = $hLlamadaAsig;
+    }
+    
+    function setPeticion($peticion)
+    {
+        $this->peticion = $peticion;
     }
     ///////////////////////////////////////////
 
@@ -232,5 +257,25 @@ class VisitanteVO
     function getTerInvVis()
     {
         return $this->terInvVis;
+    }
+
+     function getTerAsignado()
+    {
+        return $this->terAsignado;
+    }
+
+    function getHllamdaVni()
+    {
+        return $this->hLlamdaVni;
+    }
+
+    function getHllamadaAsig()
+    {
+        return $this->hLlamadaAsig;
+    }
+
+    function getPeticion()
+    {
+        return $this->peticion;
     }
 }

@@ -50,27 +50,30 @@ include_once '../../Operaciones.php';
                         <br>
                         <div class="col-md-2">
                             <label><strong>Fecha Registro</strong></label>
-                            <input type="date" id="fechaActual" value="<?php echo date("Y-m-d"); ?>" class="form-control  input-sm">
+                            <input type="date" id="fechaActual" value="<?php echo date("Y-m-d"); ?>"
+                                class="form-control  input-sm">
                         </div>
                         <div class="col-md-6">
                             <label><strong>Nombre del Consolidador:</strong></label>
-                            <select class="form-control input-sm select2" id="cmbNombConso" name="cmbNombConso"> </select>
+                            <select class="form-control input-sm select2" id="cmbNombConso" name="cmbNombConso">
+                            </select>
                         </div>
                         <div class="col-md-4">
                             <label><strong>Codigo del Pastor Inmediato:</strong></label>
-                            <select class="form-control input-sm select2" id="cmbCodPastInm" name="cmbCodPastInm"> </select>
+                            <select class="form-control input-sm select2" id="cmbCodPastInm" name="cmbCodPastInm">
+                            </select>
                         </div>
                     </div><br>
                     <div class="row">
                         <div class="col-md-4">
                             <label><strong>Nombre del Obrero:</strong></label>
-                            <select class="form-control input-sm select2" id="cmbNombreObrero" name="cmbNombreObrero" onchange="listartelefono(this, 'txtTelefonoOb')"> </select>
+                            <select class="form-control input-sm select2" id="cmbNombreObrero" name="cmbNombreObrero"
+                                onchange="listartelefono(this, 'txtTelefonoOb')"> </select>
                         </div>
                         <div class="col-md-3">
                             <label><strong>Telefono:</strong></label>
-                            <input type="text" name="txtTelefonoOb"
-                                onkeyup="this.value = this.value.toUpperCase();" id="txtTelefonoOb"
-                                class="form-control input-sm solo-numero">
+                            <input type="text" name="txtTelefonoOb" onkeyup="this.value = this.value.toUpperCase();"
+                                id="txtTelefonoOb" class="form-control input-sm solo-numero">
                         </div>
                     </div>
                     <br>
@@ -78,8 +81,8 @@ include_once '../../Operaciones.php';
                     <div class="row">
                         <div class="col-md-2">
                             <label><strong>Tipo de Documento:</strong></label>
-                            <select class="form-control input-sm " id="cmbTipoDocumentoVi"
-                                name="cmbTipoDocumentoVi"> </select>
+                            <select class="form-control input-sm " id="cmbTipoDocumentoVi" name="cmbTipoDocumentoVi">
+                            </select>
                             <input type="hidden" id="txtEditarVi" name="txtEditarVi" value="0" />
                             <input type="hidden" id="txtIdVi" name="txtIdVi" />
                             <input type="hidden" id="txtTeridVi" name="txtTeridVi" />
@@ -91,9 +94,8 @@ include_once '../../Operaciones.php';
                         </div>
                         <div class="col-md-2">
                             <label><strong>Primer nombre: </strong></label>
-                            <input type="text" name="txtPrimerNombreVi"
-                                onkeyup="this.value = this.value.toUpperCase();" id="txtPrimerNombreVi"
-                                class="form-control  input-sm">
+                            <input type="text" name="txtPrimerNombreVi" onkeyup="this.value = this.value.toUpperCase();"
+                                id="txtPrimerNombreVi" class="form-control  input-sm">
                         </div>
                         <div class="col-md-2">
                             <label><strong>Segundo nombre: </strong></label>
@@ -117,9 +119,8 @@ include_once '../../Operaciones.php';
                     <div class="row">
                         <div class="col-md-2">
                             <label><strong>Departamento:</strong></label>
-                            <select class="form-control input-sm select2" style="width: 100%;"
-                                id="cmbDepartamentoVi" name="cmbDepartamentoVi"
-                                onchange="listarComboCiudad(this, 'cmbCiudadVi')"> </select>
+                            <select class="form-control input-sm select2" style="width: 100%;" id="cmbDepartamentoVi"
+                                name="cmbDepartamentoVi" onchange="listarComboCiudad(this, 'cmbCiudadVi')"> </select>
                         </div>
                         <div class="col-md-2">
                             <label><strong>Ciudad:</strong></label>
@@ -133,15 +134,13 @@ include_once '../../Operaciones.php';
                         </div>
                         <div class="col-md-2">
                             <label><strong>Direccion:</strong></label>
-                            <input type="text" name="txtDireccionVi"
-                                onkeyup="this.value = this.value.toUpperCase();" id="txtDireccionVi"
-                                class="form-control  input-sm">
+                            <input type="text" name="txtDireccionVi" onkeyup="this.value = this.value.toUpperCase();"
+                                id="txtDireccionVi" class="form-control  input-sm">
                         </div>
                         <div class="col-md-2">
                             <label><strong>Edad:</strong></label>
-                            <input type="text" name="txtEdadVi"
-                                onkeyup="this.value = this.value.toUpperCase();" id="txtEdadVi"
-                                class="form-control  input-sm">
+                            <input type="text" name="txtEdadVi" onkeyup="this.value = this.value.toUpperCase();"
+                                id="txtEdadVi" class="form-control  input-sm">
                         </div>
                         <div class="col-md-2">
                             <label><strong>Sexo:</strong></label>
@@ -154,9 +153,8 @@ include_once '../../Operaciones.php';
                     <div class="row">
                         <div class="col-md-2">
                             <label><strong>Celular:</strong></label>
-                            <input type="text" name="txtCelularVi"
-                                onkeyup="this.value = this.value.toUpperCase();" id="txtCelularVi"
-                                class="form-control  input-sm">
+                            <input type="text" name="txtCelularVi" onkeyup="this.value = this.value.toUpperCase();"
+                                id="txtCelularVi" class="form-control  input-sm">
                         </div>
                         <div class="col-md-2">
                             <label><strong>Estado Civil:</strong></label>
@@ -167,7 +165,8 @@ include_once '../../Operaciones.php';
                     <div class="row">
                         <div class="col-md-12">
                             <label><strong>Peticion:</strong></label>
-                            <textarea class="form-control" id="txtPeticion" placeholder="Escriba la peticion." style="resize: none; height: 6%;"></textarea>
+                            <textarea class="form-control" id="txtPeticion" placeholder="Escriba la peticion."
+                                style="resize: none; height: 6%;"></textarea>
                         </div>
                     </div>
 
@@ -176,8 +175,7 @@ include_once '../../Operaciones.php';
                         <div class="col-md-12">
                             <label><strong>Filtro rapido:</strong></label>
                             <input type="text" name="txtFiltro" onkeyup="this.value = this.value.toUpperCase();"
-                                id="txtFiltroUsuarios"
-                                onclick="filtrarDatos('txtFiltroUsuarios', 'tblFiltrarUsuario')"
+                                id="txtFiltroUsuarios" onclick="filtrarDatos('txtFiltroUsuarios', 'tblFiltrarUsuario')"
                                 class="form-control  input-sm">
                         </div>
                     </div><br><br>
@@ -194,9 +192,9 @@ include_once '../../Operaciones.php';
                         <button type="button" name="btnGuardarVisInv" id="btnGuardarVisInv"
                             class="btn btn-primary btn-sm"><i class="fa fa-floppy-o" aria-hidden="true"></i>
                             Guardar</button>
-                        <button type="reset" name="btnCancelarVisInv" id="btnCancelarVisInv"
-                            data-dismiss="modal" class="btn btn-warning btn-sm"><i class="fa fa-sign-out"
-                                aria-hidden="true"></i> Cancelar</button>
+                        <button type="reset" name="btnCancelarVisInv" id="btnCancelarVisInv" data-dismiss="modal"
+                            class="btn btn-warning btn-sm"><i class="fa fa-sign-out" aria-hidden="true"></i>
+                            Cancelar</button>
                     </div>
                 </div>
                 <br>
@@ -205,29 +203,31 @@ include_once '../../Operaciones.php';
                     <div class="row"><br>
                         <div class="col-md-2">
                             <label><strong>Fecha Registro</strong></label>
-                            <input type="date" id="fechaActualVs" value="<?php echo date("Y-m-d"); ?>" class="form-control  input-sm">
+                            <input type="date" id="fechaActualVs" value="<?php echo date("Y-m-d"); ?>"
+                                class="form-control  input-sm">
                         </div>
                         <div class="col-md-6">
                             <label><strong>Nombre del Consejero:</strong></label>
-                            <select class="form-control input-sm select2" style="width: 100%;" id="cmbNombConsVs" name="cmbNombConsVs" onchange="listartelefono(this, 'txtTelefonoVs')"></select>
+                            <select class="form-control input-sm select2" style="width: 100%;" id="cmbNombConsVs"
+                                name="cmbNombConsVs" onchange="listartelefono(this, 'txtTelefonoVs')"></select>
                         </div>
                         <div class=" col-md-2">
                             <label><strong>Telefono:</strong></label>
-                            <input type="text" name="txtTelefonoVs"
-                                onkeyup="this.value = this.value.toUpperCase();" id="txtTelefonoVs"
-                                class="form-control  input-sm">
+                            <input type="text" name="txtTelefonoVs" onkeyup="this.value = this.value.toUpperCase();"
+                                id="txtTelefonoVs" class="form-control  input-sm">
                         </div>
                         <div class="col-md-2">
                             <label><strong>Llamada:</strong></label>
-                            <input type="time" style="width: 100%;" id="txtLlamadaVs" name="txtLlamadaVs" min="09:00" max="18:00" required />
+                            <input type="time" style="width: 100%;" id="txtLlamadaVs" name="txtLlamadaVs" min="09:00"
+                                max="18:00" required />
                         </div>
                     </div> <br>
                     <hr style="border: none; height: 1px; background-color: grey; width: 100%;">
                     <div class="row">
                         <div class="col-md-2">
                             <label><strong>Tipo de Documento:</strong></label>
-                            <select class="form-control input-sm " id="cmbTipoDocumentoVs"
-                                name="cmbTipoDocumentoVs"> </select>
+                            <select class="form-control input-sm " id="cmbTipoDocumentoVs" name="cmbTipoDocumentoVs">
+                            </select>
                             <input type="hidden" id="txtEditarVs" name="txtEditarVs" value="0" />
                             <input type="hidden" id="txtIdVs" name="txtIdVs" />
                             <input type="hidden" id="txtTeridVs" name="txtTeridVs" />
@@ -239,9 +239,8 @@ include_once '../../Operaciones.php';
                         </div>
                         <div class="col-md-2">
                             <label><strong>Primer nombre: </strong></label>
-                            <input type="text" name="txtPrimerNombreVs"
-                                onkeyup="this.value = this.value.toUpperCase();" id="txtPrimerNombreVs"
-                                class="form-control  input-sm">
+                            <input type="text" name="txtPrimerNombreVs" onkeyup="this.value = this.value.toUpperCase();"
+                                id="txtPrimerNombreVs" class="form-control  input-sm">
                         </div>
                         <div class="col-md-2">
                             <label><strong>Segundo nombre: </strong></label>
@@ -258,16 +257,15 @@ include_once '../../Operaciones.php';
                         <div class="col-md-2">
                             <label><strong>Segundo apellido: </strong></label>
                             <input type="text" name="txtSegundoApellidoVs"
-                                onkeyup="this.value = this.value.toUpperCase();" id="txtSegundoApellidoVs."
+                                onkeyup="this.value = this.value.toUpperCase();" id="txtSegundoApellidoVs"
                                 class="form-control  input-sm">
                         </div>
                     </div><br>
                     <div class="row">
                         <div class="col-md-2">
                             <label><strong>Departamento:</strong></label>
-                            <select class="form-control input-sm select2" style="width: 100%;"
-                                id="cmbDepartamentoVs" name="cmbDepartamentoVs"
-                                onchange="listarComboCiudad(this, 'cmbCiudadVs')"> </select>
+                            <select class="form-control input-sm select2" style="width: 100%;" id="cmbDepartamentoVs"
+                                name="cmbDepartamentoVs" onchange="listarComboCiudad(this, 'cmbCiudadVs')"> </select>
                         </div>
                         <div class="col-md-2">
                             <label><strong>Ciudad:</strong></label>
@@ -281,22 +279,27 @@ include_once '../../Operaciones.php';
                         </div>
                         <div class="col-md-2">
                             <label><strong>Direccion:</strong></label>
-                            <input type="text" name="txtDireccionVs"
-                                onkeyup="this.value = this.value.toUpperCase();" id="txtDireccionVs"
-                                class="form-control  input-sm">
+                            <input type="text" name="txtDireccionVs" onkeyup="this.value = this.value.toUpperCase();"
+                                id="txtDireccionVs" class="form-control  input-sm">
                         </div>
                         <div class="col-md-1">
                             <label><strong>Edad:</strong></label>
-                            <input type="text" name="txtEdadVs"
-                                onkeyup="this.value = this.value.toUpperCase();" id="txtEdadVs"
-                                class="form-control  input-sm">
+                            <input type="text" name="txtEdadVs" onkeyup="this.value = this.value.toUpperCase();"
+                                id="txtEdadVs" class="form-control  input-sm">
                         </div>
                         <div class="col-md-1">
                             <label><strong>Celular:</strong></label>
-                            <input type="text" name="txtTelefonoVs"
-                                onkeyup="this.value = this.value.toUpperCase();" id="txtTelefonoVs"
-                                class="form-control  input-sm">
+                            <input type="text" name="txtCelularVs" onkeyup="this.value = this.value.toUpperCase();"
+                                id="txtCelularVs" class="form-control  input-sm">
                         </div>
+                        <div class="col-md-2">
+                            <label><strong>Sexo:</strong></label>
+                            <select class="form-control input-sm select2" id="cmbsexoVs" style="width: 100%;"
+                                name="cmbsexoVs"> </select>
+                        </div>
+
+                    </div><br>
+                    <div class="row">
                         <div class="col-md-2">
                             <label><strong>Estado Civil:</strong></label>
                             <select class="form-control input-sm select2" id="cmbEstadoCivilVs" style="width: 100%;"
@@ -306,13 +309,16 @@ include_once '../../Operaciones.php';
                     <div class="row">
                         <div class="col-md-12">
                             <label><strong>Peticion:</strong></label>
-                            <textarea class="form-control" id="txtPeticion" placeholder="Escriba la peticion." style="resize: none; height: 6%;"></textarea>
+                            <textarea class="form-control" id="txtPeticionVni" na placeholder="Escriba la peticion."
+                                style="resize: none; height: 6%;"></textarea>
                         </div>
                     </div><br>
                     <div class="row">
                         <div class="col-md-6">
                             <label><strong>Asignado a:</strong></label>
-                            <select class="form-control input-sm select2" style="width: 100%;" id="cmbNombPerAsig" name="cmbNombPerAsig"></select>
+                            <select class="form-control input-sm select2" style="width: 100%;" id="cmbNombPerAsig"
+                                name="cmbNombPerAsig"
+                                onchange="listartelefonoAsignado(this, 'txtTelefonoPerAsig')"></select>
                         </div>
                         <div class="col-md-2">
                             <label><strong>Telefono:</strong></label>
@@ -322,15 +328,15 @@ include_once '../../Operaciones.php';
                         </div>
                         <div class="col-md-2">
                             <label><strong>Llamada:</strong></label>
-                            <input type="time" style="width: 100%;" id="txtLlamadaPerAsig" name="txtLlamadaPerAsig" min="09:00" max="18:00" required />
+                            <input type="time" style="width: 100%;" id="txtLlamadaPerAsig" name="txtLlamadaPerAsig"
+                                min="09:00" max="18:00" required />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <label><strong>Filtro rapido:</strong></label>
                             <input type="text" name="txtFiltro" onkeyup="this.value = this.value.toUpperCase();"
-                                id="txtFiltroUsuarios"
-                                onclick="filtrarDatos('txtFiltroUsuarios', 'tblFiltrarUsuario')"
+                                id="txtFiltroUsuarios" onclick="filtrarDatos('txtFiltroUsuarios', 'tblFiltrarUsuario')"
                                 class="form-control  input-sm">
                         </div>
                     </div><br><br>
@@ -347,9 +353,9 @@ include_once '../../Operaciones.php';
                         <button type="button" name="btnGuardarVisSolo" id="btnGuardarVisSolo"
                             class="btn btn-primary btn-sm"><i class="fa fa-floppy-o" aria-hidden="true"></i>
                             Guardar</button>
-                        <button type="reset" name="btnCancelarVisSolo" id="btnCancelarVisSolo"
-                            data-dismiss="modal" class="btn btn-warning btn-sm"><i class="fa fa-sign-out"
-                                aria-hidden="true"></i> Cancelar</button>
+                        <button type="reset" name="btnCancelarVisSolo" id="btnCancelarVisSolo" data-dismiss="modal"
+                            class="btn btn-warning btn-sm"><i class="fa fa-sign-out" aria-hidden="true"></i>
+                            Cancelar</button>
                     </div>
                 </div>
             </section>
@@ -375,7 +381,7 @@ include_once '../../Operaciones.php';
         ?>
     </div>
     <script>
-        $(".solo-numero").keydown(function(event) {
+        $(".solo-numero").keydown(function (event) {
             //alert(event.keyCode);
             if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105) && event
                 .keyCode !== 190 && event.keyCode !== 110 && event.keyCode !== 8 && event.keyCode !== 9) {
@@ -384,7 +390,7 @@ include_once '../../Operaciones.php';
         });
     </script>
     <script>
-        $(function() {
+        $(function () {
             $('.select2').select2();
         });
     </script>

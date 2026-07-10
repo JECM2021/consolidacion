@@ -109,7 +109,7 @@
     </AGREGAR_TER_INVITADO>
     <VISITANTE_INVITADO_DETALLE>
         <sql>
-            INSERT INTO VISITANTE (ref_id, fecha_registro,ter_conso,pp_id,ter_obrero,ter_nvi)VALUES(?,?,?,?,?,?);
+            INSERT INTO VISITANTE (ref_id, fecha_registro,ter_conso,pp_id,ter_obrero,ter_nvi,vis_peticion,num_ingreso)VALUES(?,?,?,?,?,?,?,(SELECT (con_numero + 1) as consecutivo  FROM  consecutivo_documento WHERE doc_id = 1));
         </sql>
     </VISITANTE_INVITADO_DETALLE>
     <VISUALIZAR_VISITANTES_INVITADOS>
@@ -137,15 +137,127 @@
             TERVIS.TER_EDAD AS EDAD,
             TERVIS.SEX_ID AS SEXO,
             TERVIS.TER_CELULAR AS CELULAR,
-            TERVIS.ETC_ID AS ESTADO_CIVIL
+            TERVIS.ETC_ID AS ESTADO_CIVIL,
+            VS.VIS_PETICION AS PETICION,
+            CONCAT('VI',' ',VS.NUM_INGRESO) AS NUM_INGRESO
             FROM
             VISITANTE VS 
             INNER JOIN TERCEROS TERVIS ON TERVIS.TER_ID = VS.TER_NVI
             INNER JOIN TERCEROS TERCONSO ON TERCONSO.TER_ID = VS.TER_CONSO
             INNER JOIN TERCEROS TEROBR ON TEROBR.TER_ID = VS.TER_OBRERO
             WHERE
-            VS.TER_NVI IS NOT NULL
+             VS.REF_ID = 1
             ORDER BY VS.VIS_ID DESC;
         </sql>
     </VISUALIZAR_VISITANTES_INVITADOS>
+    <ACTUALIZAR_TER_VISINV>
+        <sql>
+            UPDATE TERCEROS SET
+            TIP_ID = ?,
+            TER_PRIMER_NOMBRE = ?,
+            TER_SEGUNDO_NOMBRE = ?,
+            TER_PRIMER_APELLIDO = ?,
+            TER_SEGUNDO_APELLIDO = ?,
+            DEP_ID = ?,
+            CIU_ID = ?,
+            TER_BARRIO = ?,
+            TER_DIRECCION = ?,
+            TER_CELULAR = ?,
+            SEX_ID = ?,
+            TER_EDAD = ?,
+            ETC_ID = ?
+            WHERE TER_ID = ?        
+        </sql>
+    </ACTUALIZAR_TER_VISINV>
+    <ACTUALIZAR_VISITANTE_INVITADO>
+        <sql>
+            UPDATE VISITANTE SET
+            REF_ID = ?,
+            TER_CONSO = ?,
+            PP_ID = ?,
+            TER_OBRERO = ?
+            WHERE 
+            TER_NVI = ? AND VIS_ID = ?
+        </sql>
+    </ACTUALIZAR_VISITANTE_INVITADO>
+    <CONSULTAR_DOCUMENTO_VNI>
+        <sql>
+            SELECT
+            TER.TER_DOCUMENTO 
+            FROM
+            TERCEROS TER
+            WHERE TER.TER_DOCUMENTO = ?
+        </sql>
+    </CONSULTAR_DOCUMENTO_VNI>
+    <AGREGAR_TER_NOINVITADO>
+        <sql>
+            INSERT INTO TERCEROS (
+            TIP_ID,
+            TER_DOCUMENTO,
+            TER_PRIMER_NOMBRE,
+            TER_SEGUNDO_NOMBRE,
+            TER_PRIMER_APELLIDO,
+            TER_SEGUNDO_APELLIDO,
+            DEP_ID,
+            CIU_ID,
+            TER_BARRIO,
+            TER_DIRECCION,
+            TER_CELULAR,
+            SEX_ID,
+            TER_EDAD,
+            ETC_ID 
+            )
+            VALUES
+            (?,?,?,?,?,?,?,?,?,?,?,?,?,?);
+        </sql>
+    </AGREGAR_TER_NOINVITADO>
+    <VISITANTE_NOINVITADO_DETALLE>
+        <sql>
+            INSERT INTO VISITANTE (ref_id, fecha_registro, ter_conso, hllama_vni, vis_peticion, ter_asig, hllama_asig, ter_nvi,num_ingreso)
+            VALUES
+            (?,?,?,?,?,?,?,?,(SELECT (con_numero + 1) as consecutivo  FROM  consecutivo_documento WHERE doc_id = 2));
+        </sql>
+    </VISITANTE_NOINVITADO_DETALLE>
+    <VISUALIZAR_VISITANTES_NOINVITADOS>
+        <sql>
+            SELECT
+            VIS.VIS_ID AS ID_VIS,
+            TERNOVIS.TER_ID AS TER_VIS,
+            DATE(VIS.FECHA_REGISTRO) AS FECHA_REGISTRO,
+            VIS.TER_CONSO AS TER_CONSE,
+            DATE_FORMAT(VIS.HLLAMA_VNI,'%R') AS HORA_LLAMADA,
+            TERNOVIS.TIP_ID AS TIPO_DOC,
+            TERNOVIS.TER_DOCUMENTO AS NUM_DOC,
+            TERNOVIS.TER_PRIMER_NOMBRE AS PRIMER_NOMBRE,
+            TERNOVIS.TER_SEGUNDO_NOMBRE AS SEGUNDO_NOMBRE,
+            TERNOVIS.TER_PRIMER_APELLIDO AS PRIMER_APELLIDO,
+            TERNOVIS.TER_SEGUNDO_APELLIDO AS SEGUNDO_APELLIDO,
+            CONCAT(TERNOVIS.TER_PRIMER_NOMBRE,' ',TERNOVIS.TER_SEGUNDO_NOMBRE,' ',TERNOVIS.TER_PRIMER_APELLIDO,' ',TERNOVIS.TER_SEGUNDO_APELLIDO) AS NOMBRE_COMPLETO,
+            CASE
+            WHEN TERASIG.ter_primer_nombre IS NULL THEN 'SIN ASIGNAR'
+            ELSE CONCAT(TERASIG.TER_PRIMER_NOMBRE,' ',TERASIG.TER_SEGUNDO_NOMBRE,' ',TERASIG.TER_PRIMER_APELLIDO,' ',TERASIG.TER_SEGUNDO_APELLIDO)
+            END AS ASIGNADO,
+            CONCAT(TERCONSE.ter_primer_nombre,' ',TERCONSE.ter_segundo_nombre,' ',TERCONSE.ter_primer_apellido,' ',TERCONSE.ter_segundo_apellido) AS CONSEJERO,
+            TERNOVIS.DEP_ID AS DEPARTAMENTO,
+            TERNOVIS.CIU_ID AS CIUDAD,
+            TERNOVIS.TER_BARRIO AS BARRIO,
+            TERNOVIS.TER_DIRECCION AS DIRECCION,
+            TERNOVIS.TER_EDAD AS EDAD,
+            TERNOVIS.TER_CELULAR AS CELULAR,
+            TERNOVIS.SEX_ID AS SEXO_ID,
+            TERNOVIS.ETC_ID AS ESTADO_CIVIL,
+            VIS.VIS_PETICION AS PETICION,
+            VIS.TER_ASIG AS TER_ASIG,
+            VIS.TER_CONSO AS TER_CONSO,
+            VIS.HLLAMA_ASIG AS LLAMADA_ASIG,
+            CONCAT('VNI',' ',VIS.NUM_INGRESO) AS NUM_INGRESO	
+            FROM
+            VISITANTE VIS
+            INNER JOIN TERCEROS TERNOVIS ON TERNOVIS.TER_ID = VIS.TER_NVI
+            INNER JOIN TERCEROS TERCONSE ON TERCONSE.TER_ID = VIS.TER_CONSO
+            LEFT JOIN TERCEROS TERASIG ON TERASIG.TER_ID = VIS.TER_ASIG
+            WHERE VIS.REF_ID = 2
+            ORDER BY VIS.VIS_ID DESC;
+        </sql>
+    </VISUALIZAR_VISITANTES_NOINVITADOS>
 </root>

@@ -44,6 +44,15 @@ switch ($op) {
     case 11:
         visualizarVisitanteInv();
         break;
+    case 12:
+        listartelefonoAsignado();
+        break;
+    case 13:
+        registrarVisitanteNoInvitado();
+        break;
+    case 14:
+        visualizarVisitanteNoInv();
+        break;
 }
 
 function listarPastorInmediato()
@@ -225,6 +234,7 @@ function registrarVisitanteInvitado()
     $editarVisInv = addslashes(htmlspecialchars($_POST["editarVisInv"]));
     $idVisInv = addslashes(htmlspecialchars($_POST["idVisInv"]));
     $terInvVis = addslashes(htmlspecialchars($_POST["terInvVis"]));
+    $peticion = addslashes(htmlspecialchars($_POST["peticion"]));
 
     $VisitanteVO = new VisitanteVO();
     $VisitanteVO->setReferencia($referencia);
@@ -248,10 +258,12 @@ function registrarVisitanteInvitado()
     $VisitanteVO->setEstadoCivil($estadoCivil);
     $VisitanteVO->setIdVisInv($idVisInv);
     $VisitanteVO->setTerInvVis($terInvVis);
+    $VisitanteVO->setPeticion($peticion);
     $statusJson = array();
     try {
         if ($editarVisInv == 1) {
-            # code...
+            $registrarVisitante = $mdlVisitante->actualizarVisitanteInv($VisitanteVO);
+            $msj = "Actualizada correctamente Datos de Visitante Invitado";
         } else {
             $registrarVisitante = $mdlVisitante->registrarVisitanteInv($VisitanteVO);
             $msj = "Visitante invitado guardado correctamente";
@@ -273,6 +285,110 @@ function visualizarVisitanteInv()
     $mdlVisitante = new mdlVisitante();
     try {
         $listarRegistros = $mdlVisitante->visualizarVisitanteInv();
+        if ($listarRegistros !== null) {
+            $json = json_encode($listarRegistros);
+            echo $json;
+        }
+    } catch (Exception $exc) {
+        echo $exc->getTraceAsString();
+    }
+}
+
+function listartelefonoAsignado()
+{
+    $mdlVisitante = new mdlVisitante();
+    try {
+        $idObrero = addslashes(htmlspecialchars($_POST["idObrero"]));
+        try {
+            $listarTelefonoObrero = $mdlVisitante->listartelefono($idObrero);
+            if (!empty($listarTelefonoObrero)) {
+                $json = json_encode($listarTelefonoObrero);
+                echo $json;
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+    } catch (\Throwable $th) {
+        echo $exc->getTraceAsString();
+    }
+}
+
+function registrarVisitanteNoInvitado()
+{
+    $mdlVisitante = new mdlVisitante();
+    $referencia2 = addslashes(htmlspecialchars($_POST["referencia2"]));
+    $fechaRegistroVni = addslashes(htmlspecialchars($_POST["fechaRegistroVni"]));
+    $terConsejero = addslashes(htmlspecialchars($_POST["terConsejero"]));
+    $horaLlamdaVni = addslashes(htmlspecialchars($_POST["horaLlamdaVni"]));
+    $tipDocVni = addslashes(htmlspecialchars($_POST["tipDocVni"]));
+    $numDocVni = addslashes(htmlspecialchars($_POST["numDocVni"]));
+    $primerNombreVni = addslashes(htmlspecialchars($_POST["primerNombreVni"]));
+    $segundoNombreVni = addslashes(htmlspecialchars($_POST["segundoNombreVni"]));
+    $primerApellidoVni = addslashes(htmlspecialchars($_POST["primerApellidoVni"]));
+    $segundoApellidoVni = addslashes(htmlspecialchars($_POST["segundoApellidoVni"]));
+    $departamentoVni = addslashes(htmlspecialchars($_POST["departamentoVni"]));
+    $ciudadVni = addslashes(htmlspecialchars($_POST["ciudadVni"]));
+    $barrioVni = addslashes(htmlspecialchars($_POST["barrioVni"]));
+    $direccionVni = addslashes(htmlspecialchars($_POST["direccionVni"]));
+    $edadVni = addslashes(htmlspecialchars($_POST["edadVni"]));
+    $celularVni = addslashes(htmlspecialchars($_POST["celularVni"]));
+    $estadoCivilVni = addslashes(htmlspecialchars($_POST["estadoCivilVni"]));
+    $peticionVni = addslashes(htmlspecialchars($_POST["peticionVni"]));
+    $terAsig = addslashes(htmlspecialchars($_POST["terAsig"]));
+    $horaLlamadaAsig = addslashes(htmlspecialchars($_POST["horaLlamadaAsig"]));
+    $editarVni = addslashes(htmlspecialchars($_POST["editarVni"]));
+    $idVis = addslashes(htmlspecialchars($_POST["idVis"]));
+    $terIdVis = addslashes(htmlspecialchars($_POST["terIdVis"]));
+    $sexo = addslashes(htmlspecialchars($_POST["sexo"]));
+
+    $visitanteVO = new VisitanteVO();
+    $visitanteVO->setReferencia($referencia2);
+    $visitanteVO->setFechaActual($fechaRegistroVni);
+    $visitanteVO->setTerConso($terConsejero);
+    $visitanteVO->setHllamdaVni($horaLlamdaVni);
+    $visitanteVO->setTipoDocVisInv($tipDocVni);
+    $visitanteVO->setDocVisInv($numDocVni);
+    $visitanteVO->setPrimerNombreVisInv($primerNombreVni);
+    $visitanteVO->setSegundoNombreVisInv($segundoNombreVni);
+    $visitanteVO->setPrimerApellidoVisInv($primerApellidoVni);
+    $visitanteVO->setSegundoApellidoVisInv($segundoApellidoVni);
+    $visitanteVO->setDepartamento($departamentoVni);
+    $visitanteVO->setCiudad($ciudadVni);
+    $visitanteVO->setBarrio($barrioVni);
+    $visitanteVO->setDireccion($direccionVni);
+    $visitanteVO->setEdad($edadVni);
+    $visitanteVO->setCelular($celularVni);
+    $visitanteVO->setEstadoCivil($estadoCivilVni);
+    $visitanteVO->setPeticion($peticionVni);
+    $visitanteVO->setTerAsignado($terAsig);
+    $visitanteVO->setHllamadaAsig($horaLlamadaAsig);
+    $visitanteVO->setIdVisInv($idVis);
+    $visitanteVO->setTerInvVis($terIdVis);
+    $visitanteVO->setSexo($sexo);
+    $statusJson = array();
+    try {
+        if ($editarVni == 1) {
+            echo 's';
+        } else {
+            $registrarVisitanteNoNiv = $mdlVisitante->registrarVisitanteNoInv($visitanteVO);
+            $msj = "Visitante no invitado guardado correctamente";
+        }
+        if ($registrarVisitanteNoNiv > 0) {
+            $statusJson["success"] = $msj;
+        } else {
+            $statusJson["error"] = "Error al guardar el registro";
+        }
+        echo json_encode($statusJson);
+    } catch (Exception $exc) {
+        echo $exc->getTraceAsString();
+    }
+}
+
+function visualizarVisitanteNoInv()
+{
+    $mdlVisitante = new mdlVisitante();
+    try {
+        $listarRegistros = $mdlVisitante->visualizarVisitanteNoInv();
         if ($listarRegistros !== null) {
             $json = json_encode($listarRegistros);
             echo $json;
